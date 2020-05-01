@@ -214,15 +214,15 @@ public class Simulation {
 					towns = input.nextLine();
 					if(towns.length()>1||towns.charAt(0)-65>sumAreas-1||towns.charAt(0)-65<0||towns.charAt(0)-65>91-65||towns.charAt(0)-65-i==0)
 						throw new ProbabilitiesOptionException("Give the name of the area that exist e.g 'A' ");
-					town[i] =towns.charAt(0)-65;
+					town[i] =towns.charAt(0)-65+1;
 					if (userCrowd < 0)
 						throw new NegativeNumberException();
 
 					System.out.println("How many borders do you want for the area?");
 					borders = input.nextLine();
 					sumBorders = Integer.parseInt(borders);
-					if (sumBorders < 0)
-						throw new NegativeNumberException();
+					if (sumBorders <=0)
+						throw new ProbabilitiesOptionException("The borders sould be more than 1 or more!");
 					if(sumBorders>(userHeight*2+userWidth*2))
 						throw new ProbabilitiesOptionException("Insert a number that is equal or less than the perimeter of the border!");
 					System.out.println("Give the area on the grid for the borders in points(e.g 2,0"
@@ -246,6 +246,9 @@ public class Simulation {
 					}
 				}
 				}
+				}
+				for (int j = 0; j < town.length; j++) {
+					System.out.println(town[j]+" ");
 				}
 				// Reads the time of the program
 				System.out.print("\nGive the time of the program (in minutes): ");
