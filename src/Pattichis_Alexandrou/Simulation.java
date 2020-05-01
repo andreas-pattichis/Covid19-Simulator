@@ -226,11 +226,13 @@ public class Simulation {
 				    		throw new ProbabilitiesOptionException("Give the points that are in the grid..\ne.g. Give a point like (2,1)!!");
 				    	if(!(point[j].getX()<=userHeight&&point[j].getY()==userWidth||point[j].getX()==userHeight&&point[j].getY()<=userWidth||point[j].getX()==0&&point[j].getY()<=userWidth||point[j].getX()<=userHeight&&point[j].getY()==0)) 
 				    		throw new ProbabilitiesOptionException("Give the points that are on the border of the grid..\ne.g. Give a point like (height,0)!!");
-				    	
-					}
-					for (int j = 0; j < sumBorders; j++) {
+				    	if(j!=0) {
+				    	if(!(point[j].getX()==point[j-1].getX()+1&&point[j].getY()==point[j-1].getY()||point[j].getX()==point[j-1].getX()-1&&point[j].getY()==point[j-1].getY()||point[j].getX()==point[j-1].getX()&&point[j].getY()==point[j-1].getY()+1||point[j].getX()==point[j-1].getX()&&point[j].getY()==point[j-1].getY()-1)) 
+				    		throw new ProbabilitiesOptionException("Give the points successively and you should give them in order!..\ne.g. Give points like (2,0)->(3,0)->(4,0)!!");
+					}}
+					
 						
-					}
+					
 				}
 				}
 				// Reads the time of the program
