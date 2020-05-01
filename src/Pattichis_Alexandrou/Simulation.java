@@ -67,7 +67,7 @@ public class Simulation {
 		int sumImmune = 0;
 		int sumAreas = 0;
 		int sumBorders = 0;
-
+		
 		boolean done = true;
 
 		int max = 0;
@@ -143,9 +143,12 @@ public class Simulation {
 				System.out.println("Also please tell us:");
 				System.out.println("The number of areas that people will interact: ");
 				areas = input.nextLine();
+				
 				sumAreas = Integer.parseInt(areas);
 				if (sumAreas < 0)
 					throw new NegativeNumberException();
+				String towns;
+				int[] town=new int[sumAreas];
 				for (int i = 0; i < sumAreas; i++) {
 					
 				
@@ -200,12 +203,21 @@ public class Simulation {
 				max = Math.max(userWidth, userHeight);
 				if (userCrowd > userWidth * userHeight)
 					throw new OvercrowdedException();
-				System.out.print("Do you want this Area to have borders?\nPress 0 for NO or 1 for YES:");
+				if(sumAreas>1) {
+				System.out.print("\nDo you want this Area to have borders?\nPress 0 for NO or 1 for YES:");
 				option = input.nextLine();
 				opt = Integer.parseInt(option);
 				if (opt > 1 || opt < 0)
 					throw new ProbabilitiesOptionException("Insert a number that is either 0 or 1");
 				if(opt==1) {
+					System.out.print("\nWith which area do you want area "+(char)('A'+i)+" to be bordered with");
+					towns = input.nextLine();
+					if(towns.length()>1||towns.charAt(0)-65>sumAreas-1||towns.charAt(0)-65<0||towns.charAt(0)-65>91-65||towns.charAt(0)-65-i==0)
+						throw new ProbabilitiesOptionException("Give the name of the area that exist e.g 'A' ");
+					town[i] =towns.charAt(0)-65;
+					if (userCrowd < 0)
+						throw new NegativeNumberException();
+
 					System.out.println("How many borders do you want for the area?");
 					borders = input.nextLine();
 					sumBorders = Integer.parseInt(borders);
@@ -229,10 +241,10 @@ public class Simulation {
 				    	if(j!=0) {
 				    	if(!(point[j].getX()==point[j-1].getX()+1&&point[j].getY()==point[j-1].getY()||point[j].getX()==point[j-1].getX()-1&&point[j].getY()==point[j-1].getY()||point[j].getX()==point[j-1].getX()&&point[j].getY()==point[j-1].getY()+1||point[j].getX()==point[j-1].getX()&&point[j].getY()==point[j-1].getY()-1)) 
 				    		throw new ProbabilitiesOptionException("Give the points successively and you should give them in order!..\ne.g. Give points like (2,0)->(3,0)->(4,0)!!");
-					}}
-					
-						
-					
+				    	}
+				    	
+					}
+				}
 				}
 				}
 				// Reads the time of the program
