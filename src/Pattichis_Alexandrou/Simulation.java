@@ -4,6 +4,8 @@ import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the
 
 import java.util.Scanner;
 
+
+
 /**
  * Simulation Class represents the simulation that will connect all the other
  * class together and run the simulation.
@@ -40,17 +42,21 @@ public class Simulation {
 		String Immune;
 
 		String option; // The user is asked if he/she wants to add manually the probabilities of
-						// infection
+		String option1;				// infection
 		String ppVirus; // Person-to-Person probability of infection without mask
 		String ppMask; // Person-to-Person probability of infection with mask
 		String plVirus; // Place-to-Person probability of infection without mask
 		String plMask; // Place-to-Person probability of infection with mask
-
+		String areas;
+		String borders;
+		String points;
+		
 		int peopleVirus = 0;
 		int peopleMask = 0;
 		int placeVirus = 0;
 		int placeMask = 0;
 		int opt = 0;
+		int opt1 = 0;
 		int userTime = 0;
 		int userHeight = 0;
 		int userWidth = 0;
@@ -59,6 +65,9 @@ public class Simulation {
 		int sumInfected = 0;
 		int sumHealthy = 0;
 		int sumImmune = 0;
+		int sumAreas = 0;
+		int sumBorders = 0;
+
 		boolean done = true;
 
 		int max = 0;
@@ -132,16 +141,23 @@ public class Simulation {
 				}
 				System.out.println("---------------------------------------------------------------");
 				System.out.println("Also please tell us:");
-
+				System.out.println("The number of areas that people will interact: ");
+				areas = input.nextLine();
+				sumAreas = Integer.parseInt(areas);
+				if (sumAreas < 0)
+					throw new NegativeNumberException();
+				for (int i = 0; i < sumAreas; i++) {
+					
+				
 				// Reads the number of people
-				System.out.print("\nThe number of people: ");
+				System.out.print("\nThe number of people "+"for Area "+(char)('A'+i));
 				crowd = input.nextLine();
 				userCrowd = Integer.parseInt(crowd);
 				if (userCrowd < 0)
 					throw new NegativeNumberException();
 
 				// Reads the number of infected people
-				System.out.print("\nThe number of infected people: ");
+				System.out.print("\nThe number of infected people "+"for Area "+(char)('A'+i));
 				Infected = input.nextLine();
 				sumInfected = Integer.parseInt(Infected);
 				if (sumInfected < 0)
@@ -154,7 +170,7 @@ public class Simulation {
 				sub = userCrowd - sumInfected;
 
 				// Reads the number of immune people
-				System.out.print("\nGive the number of the immune people: ");
+				System.out.print("\nGive the number of the immune people "+"for Area "+(char)('A'+i));
 				Immune = input.nextLine();
 				sumImmune = Integer.parseInt(Immune);
 				if (sumImmune < 0)
@@ -165,7 +181,7 @@ public class Simulation {
 				sumHealthy = userCrowd - (sumInfected + sumImmune);
 
 				// Reads the height of the grid
-				System.out.print("\nGive the height of the board: ");
+				System.out.print("\nGive the height of the board "+"for Area "+(char)('A'+i));
 				height = input.nextLine();
 				userHeight = Integer.parseInt(height);
 				if (userHeight < 0)
@@ -174,7 +190,7 @@ public class Simulation {
 					throw new GridSizeException();
 
 				// Reads the width of the grid
-				System.out.print("\nGive the width of the board: ");
+				System.out.print("\nGive the width of the board "+"for Area "+(char)('A'+i));
 				width = input.nextLine();
 				userWidth = Integer.parseInt(width);
 				if (userWidth < 0)
@@ -184,7 +200,34 @@ public class Simulation {
 				max = Math.max(userWidth, userHeight);
 				if (userCrowd > userWidth * userHeight)
 					throw new OvercrowdedException();
-
+				System.out.print("Do you want this Area to have borders?\nPress 0 for NO or 1 for YES:");
+				option = input.nextLine();
+				opt = Integer.parseInt(option);
+				if (opt > 1 || opt < 0)
+					throw new ProbabilitiesOptionException("Insert a number that is either 0 or 1");
+				if(opt==1) {
+					System.out.println("How many borders do you want for the area?");
+					borders = input.nextLine();
+					sumBorders = Integer.parseInt(borders);
+					if (sumBorders < 0)
+						throw new NegativeNumberException();
+					if(sumBorders>(userHeight*2+userWidth*2))
+						throw new ProbabilitiesOptionException("Insert a number that is equal or less than the perimeter of the border!");
+					System.out.println("Give the area on the grid for the borders in points"
+							+ "\n(The points should be on the border of the grid, successively and you should give them in order!");
+					Point []point=new Point[sumBorders];
+					for (int j = 0; j < sumBorders; j++) {
+						System.out.println(j+1+") ");
+						points = input.nextLine();
+						point[j]=Input(points);
+				    	if(point[j].getX()==-1||point[j].getY()==-1) {
+				    		throw new ProbabilitiesOptionException("Give the points correctly..\ne.g. Give a point like (2,1)!!");
+				    		if(point[j].getX()>userHeight||point[j].getY()>userWidth) {
+				    	}
+					}
+					
+				}
+				}
 				// Reads the time of the program
 				System.out.print("\nGive the time of the program (in minutes): ");
 				time = input.nextLine();
@@ -300,5 +343,59 @@ public class Simulation {
 		if (finalSumInfected - sumInfected >= 2)
 			System.out.println("As you can see, with these results is important to STAY HOME!!\n");
 	}
-
+	public static Point Input(String s) {
+		String str="";
+		Point x=new Point(0,0);
+		String newStr="";
+		String newStr2="";
+		boolean b=false;
+		for (int i = 0; i <s.length(); i++) {
+			if(s.charAt(i)!=',')
+				str+=s.charAt(i);
+		}
+		if(isNumeric(str)&&str.length()==s.length()-1) {
+			for (int i = 0; i < s.length(); i++) {
+			
+				if(s.charAt(i)==','||s.charAt(i)=='.'||s.charAt(i)==' ')
+					b=true;
+				else if(s.charAt(i)=='-') {
+					x=new Point(-1,-1);
+				}
+				else if((Integer.parseInt(String.valueOf(s.charAt(i))))>=0&&(Integer.parseInt(String.valueOf(s.charAt(i))))<=9&&b==false)
+					newStr+=s.charAt(i);
+				else newStr2+=s.charAt(i);
+			}
+			if(newStr.length()==1&&newStr2.length()==1) {
+				x=new Point(Integer.parseInt(String.valueOf(newStr.charAt(0))),Integer.parseInt(String.valueOf(newStr2.charAt(0))));}
+			else if(newStr.length()==2&&newStr2.length()==1){
+				x=new Point(Integer.parseInt(String.valueOf(newStr.charAt(0))+String.valueOf(newStr.charAt(1))),Integer.parseInt(String.valueOf(newStr2.charAt(0))));}
+			else if(newStr.length()==2&&newStr2.length()==2)
+				x=new Point(Integer.parseInt(String.valueOf(newStr.charAt(0))+String.valueOf(newStr.charAt(1))),Integer.parseInt(String.valueOf(newStr2.charAt(0))+String.valueOf(newStr2.charAt(1))));
+			else if(newStr.length()==1&&newStr2.length()==2)
+				x=new Point(Integer.parseInt(String.valueOf(newStr.charAt(0))),Integer.parseInt(String.valueOf(newStr2.charAt(0))+String.valueOf(newStr2.charAt(1))));
+			else if(newStr.length()>2)
+				x=new Point(Integer.parseInt(newStr),0);
+			else if(newStr2.length()>2)
+				x=new Point(Integer.parseInt(newStr2),0);
+			else x=new Point(-1,-1);
+			return x;}
+		else {
+			x=new Point(-1,-1);
+			
+		}
+		return x;
+	}
+	/**
+	 * This is a method that checks if a string is numeric.
+	 * @param String str.
+	 * @return true if it is and false if is not.
+	 */
+	public static boolean isNumeric(String str) { 
+		try {  
+			Double.parseDouble(str);  
+			return true;
+		} catch(NumberFormatException e){  
+			return false;  
+		  }  
+		}
 }
