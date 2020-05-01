@@ -213,19 +213,24 @@ public class Simulation {
 						throw new NegativeNumberException();
 					if(sumBorders>(userHeight*2+userWidth*2))
 						throw new ProbabilitiesOptionException("Insert a number that is equal or less than the perimeter of the border!");
-					System.out.println("Give the area on the grid for the borders in points"
+					System.out.println("Give the area on the grid for the borders in points(e.g 2,0"
 							+ "\n(The points should be on the border of the grid, successively and you should give them in order!");
 					Point []point=new Point[sumBorders];
 					for (int j = 0; j < sumBorders; j++) {
 						System.out.println(j+1+") ");
 						points = input.nextLine();
 						point[j]=Input(points);
-				    	if(point[j].getX()==-1||point[j].getY()==-1) {
+				    	if(point[j].getX()==-1||point[j].getY()==-1) 
 				    		throw new ProbabilitiesOptionException("Give the points correctly..\ne.g. Give a point like (2,1)!!");
-				    		if(point[j].getX()>userHeight||point[j].getY()>userWidth) {
-				    	}
+				    	if(point[j].getX()>userHeight||point[j].getY()>userWidth) 
+				    		throw new ProbabilitiesOptionException("Give the points that are in the grid..\ne.g. Give a point like (2,1)!!");
+				    	if(!(point[j].getX()<=userHeight&&point[j].getY()==userWidth||point[j].getX()==userHeight&&point[j].getY()<=userWidth||point[j].getX()==0&&point[j].getY()<=userWidth||point[j].getX()<=userHeight&&point[j].getY()==0)) 
+				    		throw new ProbabilitiesOptionException("Give the points that are on the border of the grid..\ne.g. Give a point like (height,0)!!");
+				    	
 					}
-					
+					for (int j = 0; j < sumBorders; j++) {
+						
+					}
 				}
 				}
 				// Reads the time of the program
