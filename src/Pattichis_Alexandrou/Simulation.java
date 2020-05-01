@@ -1,0 +1,304 @@
+package Pattichis_Alexandrou;
+
+import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the package
+
+import java.util.Scanner;
+
+/**
+ * Simulation Class represents the simulation that will connect all the other
+ * class together and run the simulation.
+ * 
+ * Jar file should be in the workspace so that it locates it automatically.
+ * 
+ * @author apatti01
+ * @author aalexa02
+ */
+public class Simulation {
+
+	/**
+	 * delay() method is used for better view of the simulation and the process of
+	 * infection
+	 */
+	public static void delay() {
+		try {
+			Thread.sleep(1 * 2000);
+		} catch (InterruptedException ie) {
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in); // Using Scanner to read from the console
+		String time; // Indicates the time that the simulation will run (in minutes)
+		String height; // Indicates the height of the board
+		String width; // Indicates the width of the grid
+		String crowd; // Indicates the number of people that will be used for the simulation
+		String duration; // Indicates that each place will be affected
+
+		// The user enters manually the health of the people
+		String Infected;
+		String Immune;
+
+		String option; // The user is asked if he/she wants to add manually the probabilities of
+						// infection
+		String ppVirus; // Person-to-Person probability of infection without mask
+		String ppMask; // Person-to-Person probability of infection with mask
+		String plVirus; // Place-to-Person probability of infection without mask
+		String plMask; // Place-to-Person probability of infection with mask
+
+		int peopleVirus = 0;
+		int peopleMask = 0;
+		int placeVirus = 0;
+		int placeMask = 0;
+		int opt = 0;
+		int userTime = 0;
+		int userHeight = 0;
+		int userWidth = 0;
+		int userCrowd = 0;
+		int userDuration = 0;
+		int sumInfected = 0;
+		int sumHealthy = 0;
+		int sumImmune = 0;
+		boolean done = true;
+
+		int max = 0;
+
+		// Prints a message to inform the user about the simulation
+		System.out.println("                   SIMULATION OF THE PROCESS                  ");
+		System.out.println("         OF TRANSMITING A VIRUS TO A SET OF INDIVIDUALS        ");
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("       The virus is spread from person to person through       ");
+		System.out.println("         personal contact with an infected person or by        ");
+		System.out.println("            contact with an infected area of the site.       \n");
+		System.out.println("A person can be: 1) healthy  (wearing a GREEN shirt)           ");
+		System.out.println("                 2) infected (wearing a RED shirt)             ");
+		System.out.println("                 3) immune   (wearing a BLUE shirt)            ");
+		System.out.println("                 && wearing a mask                           \n");
+		System.out.println("When floor is colored: 1) ORANGE, it just got infected         ");
+		System.out.println("                       2) YELLOW, it will stop being infected\n");
+		System.out.println("*Every person stays at the place for 1 minute.                ");
+
+		// While loop to read all the inputs, that stops whenever none of the exception
+		// are caught
+		int cnt = 0;
+		int sub = 0;
+		while (done) {
+			try {
+				System.out.println("---------------------------------------------------------------");
+				System.out.println("Now you get to decide the specifications of the simulation: \n");
+				// Reads the number of people
+				System.out.println("Would you like to set your own propabilities for the affection "
+						+ "\nof the Virus to the people?");
+				System.out.print("\nPress 0 for NO or 1 for YES: ");
+				option = input.nextLine();
+				opt = Integer.parseInt(option);
+				if (opt > 1 || opt < 0)
+					throw new ProbabilitiesOptionException("Insert a number that is either 0 or 1");
+
+				if (opt == 0) {
+					System.out.print("\nDEFAULT PROBABILITIES:\n");
+					System.out.println("\n(1) Person-to-Person probability of infection without mask:(%) 70");
+					System.out.println("\n(2) Person-to-Person probability of infection with mask:(%) 40");
+					System.out.println("\n(3) Place-to-Person probability of infection without mask:(%) 60");
+					System.out.println("\n(4) Place-to-Person probability of infection with mask:(%) 30");
+				}
+
+				if (opt == 1) {
+					System.out.print("\n\nGive the percantages about:\n");
+
+					System.out.print("\n(1) Person-to-Person probability of infection without mask:(%) ");
+					ppVirus = input.nextLine();
+					peopleVirus = Integer.parseInt(ppVirus);
+					if (peopleVirus < 0 || peopleVirus > 100)
+						throw new ProbabilitiesOptionException("\nGive a persentage between 0 to 100");
+
+					System.out.print("\n(2) Person-to-Person probability of infection with mask:(%) ");
+					ppMask = input.nextLine();
+					peopleMask = Integer.parseInt(ppMask);
+					if (peopleMask < 0 || peopleMask > 100)
+						throw new ProbabilitiesOptionException("\nGive a persentage between 0 to 100");
+
+					System.out.print("\n(3) Place-to-Person probability of infection without mask:(%) ");
+					plVirus = input.nextLine();
+					placeVirus = Integer.parseInt(plVirus);
+					if (placeVirus < 0 || placeVirus > 100)
+						throw new ProbabilitiesOptionException("\nGive a persentage between 0 to 100");
+
+					System.out.print("\n(4) Place-to-Person probability of infection with mask:(%) ");
+					plMask = input.nextLine();
+					placeMask = Integer.parseInt(plMask);
+					if (placeMask < 0 || placeMask > 100)
+						throw new ProbabilitiesOptionException("\nGive a persentage between 0 to 100");
+				}
+				System.out.println("---------------------------------------------------------------");
+				System.out.println("Also please tell us:");
+
+				// Reads the number of people
+				System.out.print("\nThe number of people: ");
+				crowd = input.nextLine();
+				userCrowd = Integer.parseInt(crowd);
+				if (userCrowd < 0)
+					throw new NegativeNumberException();
+
+				// Reads the number of infected people
+				System.out.print("\nThe number of infected people: ");
+				Infected = input.nextLine();
+				sumInfected = Integer.parseInt(Infected);
+				if (sumInfected < 0)
+					throw new NegativeNumberException();
+				if (sumInfected < 1)
+					throw new InfectedLessThanOneException();
+				if (sumInfected > userCrowd)
+					throw new OvercrowdedException("\nThe number of infected is bigger than the crowd.\nTry again!!");
+				cnt = sumInfected;
+				sub = userCrowd - sumInfected;
+
+				// Reads the number of immune people
+				System.out.print("\nGive the number of the immune people: ");
+				Immune = input.nextLine();
+				sumImmune = Integer.parseInt(Immune);
+				if (sumImmune < 0)
+					throw new NegativeNumberException();
+				if (sumImmune > sub)
+					throw new OvercrowdedException(
+							"\nThe number of Immune + the infected is bigger than the crowd. \nTry again!!");
+				sumHealthy = userCrowd - (sumInfected + sumImmune);
+
+				// Reads the height of the grid
+				System.out.print("\nGive the height of the board: ");
+				height = input.nextLine();
+				userHeight = Integer.parseInt(height);
+				if (userHeight < 0)
+					throw new NegativeNumberException();
+				if (userHeight >= 50)
+					throw new GridSizeException();
+
+				// Reads the width of the grid
+				System.out.print("\nGive the width of the board: ");
+				width = input.nextLine();
+				userWidth = Integer.parseInt(width);
+				if (userWidth < 0)
+					throw new NegativeNumberException();
+				if (userWidth >= 50)
+					throw new GridSizeException();
+				max = Math.max(userWidth, userHeight);
+				if (userCrowd > userWidth * userHeight)
+					throw new OvercrowdedException();
+
+				// Reads the time of the program
+				System.out.print("\nGive the time of the program (in minutes): ");
+				time = input.nextLine();
+				userTime = Integer.parseInt(time);
+				if (userTime < 0)
+					throw new NegativeNumberException();
+
+				// Reads the duration that each place will be affected
+				System.out.print("\nGive the duration that each place will be affected: ");
+				duration = input.nextLine();
+				userDuration = Integer.parseInt(duration);
+				if (userDuration < 0)
+					throw new NegativeNumberException();
+				done = false;
+			} catch (ProbabilitiesOptionException error) {
+				System.out.println(error.getMessage());
+			} catch (OvercrowdedException error) {
+				System.out.println(error.getMessage());
+			} catch (InfectedLessThanOneException error) {
+				System.out.println(error.getMessage());
+			} catch (NegativeNumberException error) {
+				System.out.println(error.getMessage());
+			} catch (GridSizeException error) {
+				System.out.println(error.getMessage());
+			} catch (NumberFormatException error) {
+				System.out.println("\nSorry, something went wrong.");
+				System.out.println("Put a number to the input" + "\n");
+			}
+		}
+		Person[] pl = new Person[userCrowd];
+		for (int i = 0; i < sumImmune; i++) {
+			pl[i] = new Person(0, 0, false, true);
+		}
+		for (int i = sumImmune; i < sumImmune + sumInfected; i++) {
+			pl[i] = new Person(0, 0, true, false);
+		}
+		for (int i = sumImmune + sumInfected; i < userCrowd; i++) {
+			pl[i] = new Person(0, 0, false, false);
+		}
+		if (userHeight >= 20 && userWidth >= 20)
+			System.out.println("\nPlease wait a few seconds...\n");
+		Grid a = new Grid(userHeight, userWidth); // Creates the grid
+		Movement x = new Movement(userHeight, userWidth, userCrowd); // x will be used for the people to be set and move
+																		// through the grid
+		PlaceInfected places = new PlaceInfected(x.height, x.width, x.crowd, userDuration, x.getPeople()); // This will
+
+		StdDraw.clear(StdDraw.LIGHT_GRAY);
+		a.createGrid(max); // Draws the grid
+		x.setPeople(pl); // Draws the people
+		a.createGrid(max); // Draws the grid again
+
+		System.out.println("---------------------------------------------------------------");
+		// Prints the statistics
+		System.out.println("AT THE BEGINNING THERE ARE: \n");
+		if (sumHealthy > 1 || sumHealthy == 0)
+			System.out.println(sumHealthy + " people that are healthy and not immune.\n");
+		if (sumHealthy == 1)
+			System.out.println(sumHealthy + " person that is healthy and not immune.\n");
+		if (sumInfected > 1 || sumInfected == 0)
+			System.out.println(sumInfected + " people that are infected.\n");
+		if (sumInfected == 1)
+			System.out.println(sumInfected + " person that is infected.\n");
+		if (sumImmune > 1 || sumImmune == 0)
+			System.out.println(sumImmune + " people that are immune.\n");
+		if (sumImmune == 1)
+			System.out.println(sumImmune + " person that is immune.\n");
+
+		// Runs the simulation for the time that is given from the user
+		StdDraw.enableDoubleBuffering();
+		for (int i = 0; i < userTime - 1; i++) {
+			StdDraw.clear(StdDraw.LIGHT_GRAY);
+			places.setDuration(x.getPeople());
+			places.PrintInfection();
+			if (opt == 1)
+				places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
+			else
+				places.placeAffectsPeople(x.getPeople(), -1, -1);
+			if (opt == 1)
+				x.move(max, peopleVirus, peopleMask);
+			else
+				x.move(max, -1, -1);
+			delay();
+			StdDraw.show();
+			StdDraw.pause(6);
+		}
+
+		int finalSumInfected = 0;
+		int finalSumHealthy = 0;
+
+		pl = x.getPeople();
+		for (int i = 0; i < userCrowd; i++) {
+			if (pl[i].isInfected())
+				finalSumInfected++;
+			if (!pl[i].isInfected() && !pl[i].isImmune())
+				finalSumHealthy++;
+		}
+
+		System.out.println("---------------------------------------------------------------");
+		// Prints the statistics
+		System.out.println("FINALLY THERE ARE:\n");
+		if (finalSumHealthy > 1 || finalSumHealthy == 0)
+			System.out.println(finalSumHealthy + " people that are healthy and not immune.\n");
+		if (finalSumHealthy == 1)
+			System.out.println(finalSumHealthy + " person that is healthy and not immune.\n");
+		if (finalSumInfected > 1 || finalSumInfected == 0)
+			System.out.println(finalSumInfected + " people that are infected.\n");
+		if (finalSumInfected == 1)
+			System.out.println(finalSumInfected + " person that is infected.\n");
+		if (sumImmune > 1 || sumImmune == 0)
+			System.out.println(sumImmune + " people that are immune.\n");
+		if (sumImmune == 1)
+			System.out.println(sumImmune + " person that is immune.\n");
+		if (finalSumInfected - sumInfected >= 2)
+			System.out.println("As you can see, with these results is important to STAY HOME!!\n");
+	}
+
+}
