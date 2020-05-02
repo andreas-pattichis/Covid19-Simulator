@@ -1,5 +1,7 @@
 package Pattichis_Alexandrou;
 
+import java.util.ArrayList;
+
 import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the package
 
 /**
@@ -13,7 +15,7 @@ import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the
  */
 public class PlaceInfected extends Movement {
 	private static int[][] duration; // Stores the duration that each of the places will be infected
-	private Person[] p; // A type Person array that stores all the information for the people
+	ArrayList p; // A type Person array that stores all the information for the people
 	private int time; // The time that the simulation will be ran
 
 	/**
@@ -33,7 +35,7 @@ public class PlaceInfected extends Movement {
 	 * @param p Represents a type Person array that stores all the information for
 	 *          the people
 	 */
-	public PlaceInfected(int h, int w, int c, int t, Person[] p) {
+	public PlaceInfected(int h, int w, int c, int t, ArrayList p) {
 		super(h, w, c);
 		this.p = p;
 		time = t;
@@ -50,14 +52,14 @@ public class PlaceInfected extends Movement {
 	 * sets the duration by checking if each of theses persons are infected and not
 	 * wearing mask for protection.
 	 * 
-	 * @param p A type Person array that stores all the information for the people
+	 * @param ppl A type Person array that stores all the information for the people
 	 */
-	public void setDuration(Person[] p) {
+	public void setDuration(ArrayList ppl) {
 		for (int i = 0; i < crowd; i++) {
-			if (p[i].isInfected() && !p[i].wearsProtection())
-				duration[p[i].getCoordinates().getX()][p[i].getCoordinates().getY()] = time + 1;
-			else if (p[i].isInfected() && p[i].wearsProtection())
-				duration[p[i].getCoordinates().getX()][p[i].getCoordinates().getY()] = time;
+			if (((Person) ppl.get(i)).isInfected() && !((Person) ppl.get(i)).wearsProtection())
+				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] = time + 1;
+			else if (((Person) ppl.get(i)).isInfected() && ((Person) ppl.get(i)).wearsProtection())
+				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] = time;
 		}
 	}
 
@@ -67,20 +69,20 @@ public class PlaceInfected extends Movement {
 	 * 
 	 * @param p A type Person array that stores all the information for the people
 	 */
-	public void placeAffectsPeople(Person[] p,int noMask,int mask) {
+	public void placeAffectsPeople(ArrayList ppl,int noMask,int mask) {
 		int x = (int) Math.random() * 100;
 		for (int i = 0; i < crowd; i++) {
-			if (duration[p[i].getCoordinates().getX()][p[i].getCoordinates().getY()] > 0 && !p[i].isImmune())
+			if (duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] > 0 && !((Person) ppl.get(i)).isImmune())
 				if(noMask==-1) {
-				if (p[i].wearsProtection() && x < 30)
-					p[i].setInfected(true);
-				else if (!p[i].wearsProtection() && x < 60)
-					p[i].setInfected(true);}
+				if (((Person) ppl.get(i)).wearsProtection() && x < 30)
+					((Person) ppl.get(i)).setInfected(true);
+				else if (!((Person) ppl.get(i)).wearsProtection() && x < 60)
+					((Person) ppl.get(i)).setInfected(true);}
 				else {
-					if (p[i].wearsProtection() && x <mask)
-						p[i].setInfected(true);
-					else if (!p[i].wearsProtection() && x < noMask)
-						p[i].setInfected(true);}
+					if (((Person) ppl.get(i)).wearsProtection() && x <mask)
+						((Person) ppl.get(i)).setInfected(true);
+					else if (!((Person) ppl.get(i)).wearsProtection() && x < noMask)
+						((Person) ppl.get(i)).setInfected(true);}
 		}
 	}
 

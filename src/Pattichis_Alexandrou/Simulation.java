@@ -2,6 +2,7 @@ package Pattichis_Alexandrou;
 
 import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the package
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -280,6 +281,8 @@ public class Simulation {
 			}
 		}
 		Person[] pl = new Person[userCrowd];
+		ArrayList ppl=new ArrayList();
+		
 		for (int i = 0; i < sumImmune; i++) {
 			pl[i] = new Person(0, 0, false, true);
 		}
@@ -317,8 +320,10 @@ public class Simulation {
 		if (sumImmune == 1)
 			System.out.println(sumImmune + " person that is immune.\n");
 
+
 		// Runs the simulation for the time that is given from the user
 		StdDraw.enableDoubleBuffering();
+		//Person[] Arr=new Person[userCrowd];
 		for (int i = 0; i < userTime - 1; i++) {
 			StdDraw.clear(StdDraw.LIGHT_GRAY);
 			places.setDuration(x.getPeople());
@@ -334,17 +339,29 @@ public class Simulation {
 			delay();
 			StdDraw.show();
 			StdDraw.pause(6);
+			
 		}
-
+	/*	ArrayList Array=new ArrayList();
+		for (int i = 0; i < Arr.length; i++) {
+			Array.add(Arr[i]);
+		}
+		for (int i = 0; i < Array.size(); i++) {
+			
+		}*/
 		int finalSumInfected = 0;
 		int finalSumHealthy = 0;
-
-		pl = x.getPeople();
-		for (int i = 0; i < userCrowd; i++) {
-			if (pl[i].isInfected())
+		int finalSumImmune = 0;
+		ppl = x.getPeople();
+		for (int i = 0; i < x.getCrowd(); i++) {
+			
+			if (((Person) ppl.get(i)).isImmune() )
+				finalSumImmune++;
+			else	if (((Person) ppl.get(i)).isInfected())
 				finalSumInfected++;
-			if (!pl[i].isInfected() && !pl[i].isImmune())
+			else
+				if (!((Person) ppl.get(i)).isInfected() && !((Person) ppl.get(i)).isImmune())
 				finalSumHealthy++;
+			
 		}
 
 		System.out.println("---------------------------------------------------------------");
@@ -358,10 +375,10 @@ public class Simulation {
 			System.out.println(finalSumInfected + " people that are infected.\n");
 		if (finalSumInfected == 1)
 			System.out.println(finalSumInfected + " person that is infected.\n");
-		if (sumImmune > 1 || sumImmune == 0)
-			System.out.println(sumImmune + " people that are immune.\n");
-		if (sumImmune == 1)
-			System.out.println(sumImmune + " person that is immune.\n");
+		if (finalSumImmune > 1 || finalSumImmune == 0)
+			System.out.println(finalSumImmune + " people that are immune.\n");
+		if (finalSumImmune == 1)
+			System.out.println(finalSumImmune + " person that is immune.\n");
 		if (finalSumInfected - sumInfected >= 2)
 			System.out.println("As you can see, with these results is important to STAY HOME!!\n");
 	}

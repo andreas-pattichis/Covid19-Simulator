@@ -2,6 +2,7 @@ package Pattichis_Alexandrou;
 
 import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the package
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  * Movement Class is used to make the different moves of people during the
@@ -14,9 +15,9 @@ import java.awt.Color;
  */
 public class Movement extends Grid {
 
-	protected int crowd; // Number of people that appear in the room
+	protected static int  crowd; // Number of people that appear in the room
 	private Person[] people; // All the people that have been created
-
+	private ArrayList <Person>ppl=new ArrayList<Person>();
 	/**
 	 * Movement constructor that takes 3 integers as inputs: h,w and c
 	 * 
@@ -81,7 +82,9 @@ public class Movement extends Grid {
 
 			p[i].drawPerson();
 		}
-
+		for (int i = 0; i < p.length; i++) {
+			ppl.add(p[i]);
+}
 		return p;
 	}
 
@@ -111,7 +114,7 @@ public class Movement extends Grid {
 	 */
 	public boolean checkEmpty(Point p) {
 		for (int i = 0; i < crowd; i++)
-			if (p.equals(people[i].getCoordinates()))
+			if (p.equals(ppl.get(i).getCoordinates()))
 				return false;
 		return true;
 	}
@@ -168,11 +171,19 @@ public class Movement extends Grid {
 	 * 
 	 * @param max Indicates Math.max(height,width)
 	 */
-	public void move(int max, int noMask, int mask) {
+	public ArrayList<Person> move(int max, int noMask, int mask) {
 		Point check = new Point(0, 0);
-
+for (int i = 0; i <crowd; i++) {
+			
+			if(ppl.get(i).getCoordinates().getX()==2&&ppl.get(i).getCoordinates().getY()==2) {
+				
+				ppl.remove(i);
+				System.out.println("true");
+				crowd--;
+				break;}}
+		
 		for (int i = 0; i < crowd; i++) {
-			if (withinMargins(people[i].getCoordinates()))
+			if (withinMargins(((Person) ppl.get(i)).getCoordinates()))
 				if (choiceToMove()) {
 					boolean[] directions = new boolean[9];
 					for (int j = 0; j < 9; j++)
@@ -181,39 +192,49 @@ public class Movement extends Grid {
 					boolean moved = false;
 					while (!moved) {
 
-						check = new Point(people[i].getCoordinates().getX(), people[i].getCoordinates().getY());
+						check = new Point(( ppl.get(i)).getCoordinates().getX(), ((Person) ppl.get(i)).getCoordinates().getY());
 
 						int dir = (int) (Math.random() * 9) + 1;
 
-						check = new Point(people[i].getCoordinates().getX() + moveTo(dir).getX(),
-								people[i].getCoordinates().getY() + moveTo(dir).getY());
+						check = new Point(((Person) ppl.get(i)).getCoordinates().getX() + moveTo(dir).getX(),
+								((Person) ppl.get(i)).getCoordinates().getY() + moveTo(dir).getY());
 
-						if (checkEmpty(check) && withinMargins(check) || people[i].getCoordinates().equals(check)) {
+						if (checkEmpty(check) && withinMargins(check) || ((Person) ppl.get(i)).getCoordinates().equals(check)) {
 							moved = true;
-							people[i].updateCoordinates(check);
-							PersonInfected inf = new PersonInfected(people[i], this);
-							people[i].setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
+							((Person) ppl.get(i)).updateCoordinates(check);
+							PersonInfected inf = new PersonInfected(((Person) ppl.get(i)), this);
+							((Person) ppl.get(i)).setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
 							for (int j = 0; j < crowd; j++)
-								if (people[j].getCoordinates().equals(check))
-									people[j].setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
+								if (((Person) ppl.get(i)).getCoordinates().equals(check))
+									((Person) ppl.get(i)).setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
 						}
 					}
 
 				}
 		}
-		
 		createGrid(max);
-		for (int i = 0; i < crowd; i++)
-			people[i].drawPerson();
+		
+			for (int i = 0; i <ppl.size(); i++) {
+				System.out.println(ppl.get(i).getCoordinates().getX()+" "+ppl.get(i).getCoordinates().getY());
+		 ((Person) ppl.get(i)).drawPerson();}
+			System.out.println("\n");
+		return ppl;
 	}
-
+	
+/*public ArrayList<Person> move2 (ArrayList<Person> a) {
+	for (int i = 0; i <a.size(); i++) {
+		if(((Person) a.get(i)).getCoordinates()==new Point (2,2))
+			a.remove(i);
+		else ((Person) a.get(i)).drawPerson();}
+	return a;
+}*/
 	/**
 	 * Getter method for this.people
 	 * 
 	 * @return this.people
 	 */
-	public Person[] getPeople() {
-		return people;
+	public ArrayList<Person> getPeople() {
+		return ppl;
 	}
 
 	/**

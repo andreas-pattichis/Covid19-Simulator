@@ -1,5 +1,7 @@
 package Pattichis_Alexandrou;
 
+import java.util.ArrayList;
+
 /**
  * PersonInfected Class is used to check and set if the people are infected by
  * their contact with other people
@@ -10,6 +12,7 @@ package Pattichis_Alexandrou;
 public class PersonInfected {
 
 	private Person person; // Represents the person that will be checked if is infected
+	private ArrayList ppl;
 	private Person[] people; // Represents all the people that are used for the stimulation
 	private int crowd; // Represents the number of people
 
@@ -23,10 +26,10 @@ public class PersonInfected {
 	 */
 	public PersonInfected(Person p, Movement m) {
 		person = p;
-		people = m.getPeople();
+		ppl = m.getPeople();
 		crowd = m.getCrowd();
 	}
-
+	
 	/**
 	 * moveTo() method takes one input as a parameter: dir. It chooses to which
 	 * direction the person will move according to the dir that is given
@@ -82,13 +85,13 @@ public class PersonInfected {
 				if (person.getCoordinates().getX() < h && person.getCoordinates().getY() < w) {
 
 					for (int i = 0; i < crowd; i++)
-						if (pNew.equals(people[i].getCoordinates())
-								&& (people[i].isInfected() || person.isInfected())) {
+						if (pNew.equals(((Person) ppl.get(i)).getCoordinates())
+								&& (((Person) ppl.get(i)).isInfected() || person.isInfected())) {
 							int random = (int) (Math.random() * 100);
 
 							// Default probabilities
 							if (noMask == -1) {
-								if (person.wearsProtection() || people[i].wearsProtection()) {
+								if (person.wearsProtection() || ((Person) ppl.get(i)).wearsProtection()) {
 									if (random < 40 && !person.isImmune())
 										return true;
 								} else {
@@ -99,7 +102,7 @@ public class PersonInfected {
 
 							// Probabilities that the use has chosen
 							else {
-								if (person.wearsProtection() || people[i].wearsProtection()) {
+								if (person.wearsProtection() || ((Person) ppl.get(i)).wearsProtection()) {
 									if (random < mask && !person.isImmune())
 										return true;
 								} else {
