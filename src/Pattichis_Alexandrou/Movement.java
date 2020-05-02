@@ -15,9 +15,10 @@ import java.util.ArrayList;
  */
 public class Movement extends Grid {
 
-	protected static int  crowd; // Number of people that appear in the room
+	protected static int crowd; // Number of people that appear in the room
 	private Person[] people; // All the people that have been created
-	private ArrayList <Person>ppl=new ArrayList<Person>();
+	private ArrayList<Person> ppl = new ArrayList<Person>();
+
 	/**
 	 * Movement constructor that takes 3 integers as inputs: h,w and c
 	 * 
@@ -84,7 +85,7 @@ public class Movement extends Grid {
 		}
 		for (int i = 0; i < p.length; i++) {
 			ppl.add(p[i]);
-}
+		}
 		return p;
 	}
 
@@ -173,15 +174,17 @@ public class Movement extends Grid {
 	 */
 	public ArrayList<Person> move(int max, int noMask, int mask) {
 		Point check = new Point(0, 0);
-for (int i = 0; i <crowd; i++) {
-			
-			if(ppl.get(i).getCoordinates().getX()==2&&ppl.get(i).getCoordinates().getY()==2) {
-				
+		for (int i = 0; i < crowd; i++) {
+
+			if (ppl.get(i).getCoordinates().getX() == 2 && ppl.get(i).getCoordinates().getY() == 2) {
+
 				ppl.remove(i);
 				System.out.println("true");
 				crowd--;
-				break;}}
-		
+				break;
+			}
+		}
+
 		for (int i = 0; i < crowd; i++) {
 			if (withinMargins(((Person) ppl.get(i)).getCoordinates()))
 				if (choiceToMove()) {
@@ -192,42 +195,45 @@ for (int i = 0; i <crowd; i++) {
 					boolean moved = false;
 					while (!moved) {
 
-						check = new Point(( ppl.get(i)).getCoordinates().getX(), ((Person) ppl.get(i)).getCoordinates().getY());
+						check = new Point((ppl.get(i)).getCoordinates().getX(),
+								((Person) ppl.get(i)).getCoordinates().getY());
 
 						int dir = (int) (Math.random() * 9) + 1;
 
 						check = new Point(((Person) ppl.get(i)).getCoordinates().getX() + moveTo(dir).getX(),
 								((Person) ppl.get(i)).getCoordinates().getY() + moveTo(dir).getY());
 
-						if (checkEmpty(check) && withinMargins(check) || ((Person) ppl.get(i)).getCoordinates().equals(check)) {
+						if (checkEmpty(check) && withinMargins(check)
+								|| ((Person) ppl.get(i)).getCoordinates().equals(check)) {
 							moved = true;
 							((Person) ppl.get(i)).updateCoordinates(check);
 							PersonInfected inf = new PersonInfected(((Person) ppl.get(i)), this);
-							((Person) ppl.get(i)).setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
+							((Person) ppl.get(i))
+									.setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
 							for (int j = 0; j < crowd; j++)
 								if (((Person) ppl.get(i)).getCoordinates().equals(check))
-									((Person) ppl.get(i)).setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
+									((Person) ppl.get(i))
+											.setInfected(inf.checkIfInfected(super.height, super.width, noMask, mask));
 						}
 					}
 
 				}
 		}
 		createGrid(max);
-		
-			for (int i = 0; i <ppl.size(); i++) {
-				System.out.println(ppl.get(i).getCoordinates().getX()+" "+ppl.get(i).getCoordinates().getY());
-		 ((Person) ppl.get(i)).drawPerson();}
-			System.out.println("\n");
+
+		for (int i = 0; i < ppl.size(); i++) {
+			System.out.println(ppl.get(i).getCoordinates().getX() + " " + ppl.get(i).getCoordinates().getY());
+			((Person) ppl.get(i)).drawPerson();
+		}
+		System.out.println("\n");
 		return ppl;
 	}
-	
-/*public ArrayList<Person> move2 (ArrayList<Person> a) {
-	for (int i = 0; i <a.size(); i++) {
-		if(((Person) a.get(i)).getCoordinates()==new Point (2,2))
-			a.remove(i);
-		else ((Person) a.get(i)).drawPerson();}
-	return a;
-}*/
+
+	/*
+	 * public ArrayList<Person> move2 (ArrayList<Person> a) { for (int i = 0; i
+	 * <a.size(); i++) { if(((Person) a.get(i)).getCoordinates()==new Point (2,2))
+	 * a.remove(i); else ((Person) a.get(i)).drawPerson();} return a; }
+	 */
 	/**
 	 * Getter method for this.people
 	 * 
