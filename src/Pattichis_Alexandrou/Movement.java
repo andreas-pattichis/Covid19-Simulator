@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Movement extends Grid {
 
-	protected static int crowd; // Number of people that appear in the room
+	protected int crowd; // Number of people that appear in the room
 	private Person[] people; // All the people that have been created
 	private ArrayList<Person> ppl = new ArrayList<Person>();
 

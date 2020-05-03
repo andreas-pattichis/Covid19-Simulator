@@ -342,10 +342,10 @@ public class Area {
 
 		// x.setPeople(pl);
 		System.out.println(pl.size());
-		places.setDuration(x.getPeople());
+	//	places.setDuration(x.getPeople());
 		places.PrintInfection();
 		// if (numBorders != 0)
-		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
+	//	places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
 		// else
 		// places.placeAffectsPeople(x.getPeople(), -1, -1);
 		// if (numBorders != 0)
