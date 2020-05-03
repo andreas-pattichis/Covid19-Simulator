@@ -3,7 +3,7 @@ package Pattichis_Alexandrou;
 import java.util.Scanner;
 
 public class Area {
-	private String name;
+	private char name;
 	private String bordersWith;
 	private int crowd;
 	private int numInfected;
@@ -65,7 +65,7 @@ public class Area {
 		return x;
 	}
 
-	public Area(String n) {
+	public Area(char n) {
 		name = n;
 		crowd = 0;
 		numInfected = 0;
@@ -148,7 +148,7 @@ public class Area {
 		return height;
 	}
 
-	public void setWidth() throws NegativeNumberException, GridSizeException {
+	public void readWidth() throws NegativeNumberException, GridSizeException {
 		// Reads the width of the grid
 		System.out.print("\nThe number of infected people " + "for area " + name + ": ");
 		String w = input.nextLine();
@@ -241,6 +241,9 @@ public class Area {
 
 			}
 		}
+		
+		else 
+			numBorders = 0;
 	}
 
 	public int getNumBorders() {
