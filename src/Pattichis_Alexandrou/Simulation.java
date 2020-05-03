@@ -212,7 +212,7 @@ public class Simulation {
 				System.out.println("Put a number to the input" + "\n");
 			}
 		}
-
+		
 		for (int i = 0; i < sumAreas; i++) {
 			areas[i].setPeople();
 			if (areas[i].getHeight() >= 20 && areas[i].getHeight() >= 20)
@@ -221,12 +221,15 @@ public class Simulation {
 			areas[i].setGrid();
 			areas[i].setMovement();
 			areas[i].setPlaces(userDuration);
+			StdDraw.enableDoubleBuffering();
 			areas[i].drawInitialArea();
-			
+			delay();
+			StdDraw.show();
+			StdDraw.pause(6);
 		}
 
 		// Runs the simulation for the time that is given from the user
-		StdDraw.enableDoubleBuffering();
+		
 		// Person[] Arr=new Person[userCrowd];
 		for (int i = 0; i < userTime - 1; i++)
 			for (int j = 0; j < sumAreas; j++) {

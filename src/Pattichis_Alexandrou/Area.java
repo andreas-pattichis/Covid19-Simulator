@@ -339,7 +339,7 @@ public class Area {
 int k=0;
 	public void drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
 		int max = Math.max(this.width, this.height);
-		
+		StdDraw.enableDoubleBuffering();
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 
 		// x.setPeople(pl);
