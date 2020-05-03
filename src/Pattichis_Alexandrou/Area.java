@@ -1,6 +1,9 @@
 package Pattichis_Alexandrou;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import edu.princeton.cs.introcs.StdDraw;
 
 public class Area {
 	private char name;
@@ -13,6 +16,11 @@ public class Area {
 	private int width;
 	private int numBorders;
 	private Point[] borders;
+	private Person[] people;
+	private ArrayList pl = new ArrayList();
+	private Grid a;
+	private Movement x;
+	private PlaceInfected places;
 
 	Scanner input = new Scanner(System.in); // Using Scanner to read from the console
 
@@ -109,7 +117,7 @@ public class Area {
 
 	public void readNumImmune() throws NegativeNumberException, OvercrowdedException {
 		// Reads the number of immune people
-		System.out.print("\nThe number of infected people " + "for area " + name + ": ");
+		System.out.print("\nThe number of immune people " + "for area " + name + ": ");
 		String i = input.nextLine();
 		this.numImmune = Integer.parseInt(i);
 
@@ -135,7 +143,7 @@ public class Area {
 
 	public void readHeight() throws NegativeNumberException, GridSizeException {
 		// Reads the height of the grid
-		System.out.print("\nThe number of infected people " + "for area " + name + ": ");
+		System.out.print("\nThe height " + "for area " + name + ": ");
 		String h = input.nextLine();
 		this.height = Integer.parseInt(h);
 		if (this.height < 0)
@@ -150,7 +158,7 @@ public class Area {
 
 	public void readWidth() throws NegativeNumberException, GridSizeException {
 		// Reads the width of the grid
-		System.out.print("\nThe number of infected people " + "for area " + name + ": ");
+		System.out.print("\nThe width " + "for area " + name + ": ");
 		String w = input.nextLine();
 		width = Integer.parseInt(w);
 		if (width < 0)
@@ -241,8 +249,8 @@ public class Area {
 
 			}
 		}
-		
-		else 
+
+		else
 			numBorders = 0;
 	}
 
@@ -252,6 +260,127 @@ public class Area {
 
 	public Point[] getBorders() {
 		return borders;
+	}
+
+	public void setPeople() {
+		this.people = new Person[this.crowd];
+
+		for (int i = 0; i < this.numImmune; i++) {
+			this.people[i] = new Person(0, 0, false, true);
+		}
+		for (int i = this.numImmune; i < this.numImmune + this.numInfected; i++) {
+			this.people[i] = new Person(0, 0, true, false);
+		}
+		for (int i = this.numImmune + this.numInfected; i < this.crowd; i++) {
+			this.people[i] = new Person(0, 0, false, false);
+		}
+	}
+
+	public void setGrid() {
+		a = new Grid(this.height, this.width); // Creates the grid
+	}
+
+	public void setMovement() {
+		Movement x = new Movement(this.height, this.width, this.crowd); // x will be used for the people to be set and
+																		// move through the grid
+	}
+
+	public void setPlaces(int duration) {
+		places = new PlaceInfected(this.height, this.width, this.crowd, duration, x.getPeople());
+	}
+
+	/**
+	 * delay() method is used for better view of the simulation and the process of
+	 * infection
+	 */
+	public static void delay() {
+		try {
+			Thread.sleep(1 * 2000);
+		} catch (InterruptedException ie) {
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	public void drawInitialArea() {
+
+		StdDraw.clear(StdDraw.LIGHT_GRAY);
+		int max = Math.max(this.width, this.height);
+		a.createGrid(max); // Draws the grid
+		x.setPeople(people); // Draws the people
+		a.createGrid(max); // Draws the grid again
+
+		System.out.println("---------------------------------------------------------------");
+		// Prints the statistics
+		System.out.println("AT THE BEGINNING THERE ARE: \n");
+		if (this.numHealthy > 1 || this.numHealthy == 0)
+			System.out.println(this.numHealthy + " people that are healthy and not immune.\n");
+		if (this.numHealthy == 1)
+			System.out.println(this.numHealthy + " person that is healthy and not immune.\n");
+		if (this.numInfected > 1 || this.numInfected == 0)
+			System.out.println(this.numInfected + " people that are infected.\n");
+		if (this.numInfected == 1)
+			System.out.println(this.numInfected + " person that is infected.\n");
+		if (this.numImmune > 1 || this.numImmune == 0)
+			System.out.println(this.numImmune + " people that are immune.\n");
+		if (this.numImmune == 1)
+			System.out.println(this.numImmune + " person that is immune.\n\\n");
+
+	}
+
+	public void drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
+		int max = Math.max(this.width, this.height);
+		StdDraw.clear(StdDraw.LIGHT_GRAY);
+		places.setDuration(x.getPeople());
+		places.PrintInfection();
+		if (numBorders != 0)
+			places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
+		else
+			places.placeAffectsPeople(x.getPeople(), -1, -1);
+		if (numBorders != 0)
+			x.move(max, peopleVirus, peopleMask);
+		else
+			x.move(max, -1, -1);
+		delay();
+		StdDraw.show();
+		StdDraw.pause(6);
+	}
+
+	public void printFinalStaticsforArea() {
+
+		ArrayList ppl = new ArrayList();
+		int finalSumInfected = 0;
+		int finalSumHealthy = 0;
+		int finalSumImmune = 0;
+		ppl = x.getPeople();
+		
+		for (int i = 0; i < x.getCrowd(); i++) {
+
+			if (((Person) ppl.get(i)).isImmune())
+				finalSumImmune++;
+			else if (((Person) ppl.get(i)).isInfected())
+				finalSumInfected++;
+			else if (!((Person) ppl.get(i)).isInfected() && !((Person) ppl.get(i)).isImmune())
+				finalSumHealthy++;
+
+		}
+
+		System.out.println("---------------------------------------------------------------");
+		// Prints the statistics
+		System.out.println("FINALLY THERE ARE:\n");
+		if (finalSumHealthy > 1 || finalSumHealthy == 0)
+			System.out.println(finalSumHealthy + " people that are healthy and not immune.\n");
+		if (finalSumHealthy == 1)
+			System.out.println(finalSumHealthy + " person that is healthy and not immune.\n");
+		if (finalSumInfected > 1 || finalSumInfected == 0)
+			System.out.println(finalSumInfected + " people that are infected.\n");
+		if (finalSumInfected == 1)
+			System.out.println(finalSumInfected + " person that is infected.\n");
+		if (finalSumImmune > 1 || finalSumImmune == 0)
+			System.out.println(finalSumImmune + " people that are immune.\n");
+		if (finalSumImmune == 1)
+			System.out.println(finalSumImmune + " person that is immune.\n");
+		if (finalSumInfected - this.numInfected >= 2)
+			System.out.println("As you can see, with these results is important to STAY HOME!!\n\\n");
 	}
 
 }
