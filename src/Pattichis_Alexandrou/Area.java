@@ -335,26 +335,34 @@ public class Area {
 			System.out.println(this.numImmune + " person that is immune.\n\\n");
 
 	}
-
+	ArrayList<Person> kl=new ArrayList<Person>();
+int k=0;
 	public void drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
 		int max = Math.max(this.width, this.height);
+		
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 
 		// x.setPeople(pl);
 		System.out.println(pl.size());
-	//	places.setDuration(x.getPeople());
-		places.PrintInfection();
+		places.setDuration(x.getPeople());
+		
 		// if (numBorders != 0)
-	//	places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
+		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
 		// else
 		// places.placeAffectsPeople(x.getPeople(), -1, -1);
 		// if (numBorders != 0)
-		x.move(max, peopleVirus, peopleMask);
+		kl=x.move(max, peopleVirus, peopleMask);
+		places.PrintInfection();
+		a.createGrid(max); // Draws the grid again
+		for (int i = 0; i < kl.size(); i++) {
+			kl.get(i).drawPerson();
+		}
 		// else
 		// x.move(max, -1, -1);
 		delay();
 		StdDraw.show();
 		StdDraw.pause(6);
+		k++;
 	}
 
 	public void printFinalStaticsforArea() {

@@ -173,7 +173,7 @@ public class Movement extends Grid {
 	 */
 	public ArrayList<Person> move(int max, int noMask, int mask) {
 		Point check = new Point(0, 0);
-		for (int i = 0; i < crowd; i++) {
+	/*	for (int i = 0; i < crowd; i++) {
 
 			if (ppl.get(i).getCoordinates().getX() == 2 && ppl.get(i).getCoordinates().getY() == 2) {
 
@@ -181,7 +181,7 @@ public class Movement extends Grid {
 				crowd--;
 				break;
 			}
-		}
+		}*/
 
 		for (int i = 0; i < crowd; i++) {
 			if (withinMargins(((Person) ppl.get(i)).getCoordinates()))
@@ -221,8 +221,9 @@ public class Movement extends Grid {
 
 		for (int i = 0; i < ppl.size(); i++) {
 			System.out.println(ppl.get(i).getCoordinates().getX() + " " + ppl.get(i).getCoordinates().getY());
-			((Person) ppl.get(i)).drawPerson();
+			//((Person) ppl.get(i)).drawPerson();
 		}
+		
 		System.out.println("\n");
 		return ppl;
 	}

@@ -221,8 +221,8 @@ public class Simulation {
 			areas[i].setGrid();
 			areas[i].setMovement();
 			areas[i].setPlaces(userDuration);
-
 			areas[i].drawInitialArea();
+			
 		}
 
 		// Runs the simulation for the time that is given from the user
@@ -232,8 +232,9 @@ public class Simulation {
 			for (int j = 0; j < sumAreas; j++) {
 				if (opt == 1)
 					areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
-				else
-					areas[j].drawEachStep(-1, -1, -1, -1);
+				else {
+					
+					areas[j].drawEachStep(-1, -1, -1, -1);}
 			}
 		/*
 		 * ArrayList Array=new ArrayList(); for (int i = 0; i < Arr.length; i++) {

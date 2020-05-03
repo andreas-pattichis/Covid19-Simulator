@@ -14,7 +14,7 @@ import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the
  * @author aalexa02
  */
 public class PlaceInfected extends Movement {
-	private static int[][] duration; // Stores the duration that each of the places will be infected
+	private int[][] duration; // Stores the duration that each of the places will be infected
 	ArrayList<Person> p; // A type Person array that stores all the information for the people
 	private int time; // The time that the simulation will be ran
 
@@ -37,10 +37,10 @@ public class PlaceInfected extends Movement {
 	 */
 	public PlaceInfected(int h, int w, int c, int t, ArrayList<Person> p) {
 		super(h, w, c);
-		System.out.println("PlaceInfected.PlaceInfected()");
 		this.p = p;
 		time = t;
 		duration = new int[w][h];
+		
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				duration[i][j] = 0;
@@ -96,6 +96,7 @@ public class PlaceInfected extends Movement {
 	 * YELLOW
 	 */
 	public void PrintInfection() {
+		System.out.println(width+" "+height);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				if (duration[i][j] > 0) {
