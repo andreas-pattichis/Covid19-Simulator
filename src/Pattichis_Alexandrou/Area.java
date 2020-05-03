@@ -18,7 +18,7 @@ public class Area {
 	private int width;
 	private int numBorders;
 	private Point[] borders;
-	private Person[] people;
+	private Person[] people = null;
 	private ArrayList<Person> pl = new ArrayList<Person>();
 	private Grid a;
 	private Movement x;
@@ -278,9 +278,9 @@ public class Area {
 		}
 		for (int i = 0; i < people.length; i++) {
 			pl.add(people[i]);
-			
+
 		}
-		
+
 	}
 
 	public void setGrid() {
@@ -288,13 +288,12 @@ public class Area {
 	}
 
 	public void setMovement() {
-		 x = new Movement(this.height, this.width, this.crowd); // x will be used for the people to be set and
-		//return x;																// move through the grid
+		x = new Movement(this.height, this.width, this.crowd); // x will be used for the people to be set and
+		// return x; // move through the grid
 	}
 
 	public void setPlaces(int duration) {
-		
-		
+
 		places = new PlaceInfected(this.height, this.width, this.crowd, duration, x.getPeople());
 	}
 
@@ -315,7 +314,7 @@ public class Area {
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 		int max = Math.max(this.width, this.height);
 		a.createGrid(max); // Draws the grid
-		
+
 		x.setPeople(pl); // Draws the people
 		a.createGrid(max); // Draws the grid again
 
@@ -340,19 +339,19 @@ public class Area {
 	public void drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
 		int max = Math.max(this.width, this.height);
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
-		
-		x.setPeople(pl);
+
+		// x.setPeople(pl);
 		System.out.println(pl.size());
 		places.setDuration(x.getPeople());
 		places.PrintInfection();
-		if (numBorders != 0)
-			places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
-		else
-			places.placeAffectsPeople(x.getPeople(), -1, -1);
-		if (numBorders != 0)
-			x.move(max, peopleVirus, peopleMask);
-		else
-			x.move(max, -1, -1);
+		// if (numBorders != 0)
+		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
+		// else
+		// places.placeAffectsPeople(x.getPeople(), -1, -1);
+		// if (numBorders != 0)
+		x.move(max, peopleVirus, peopleMask);
+		// else
+		// x.move(max, -1, -1);
 		delay();
 		StdDraw.show();
 		StdDraw.pause(6);
@@ -364,9 +363,9 @@ public class Area {
 		int finalSumInfected = 0;
 		int finalSumHealthy = 0;
 		int finalSumImmune = 0;
-		
+
 		ppl = x.getPeople();
-		
+
 		for (int i = 0; i < x.getCrowd(); i++) {
 
 			if (((Person) ppl.get(i)).isImmune())

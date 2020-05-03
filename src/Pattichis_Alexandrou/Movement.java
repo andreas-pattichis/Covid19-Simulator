@@ -61,7 +61,7 @@ public class Movement extends Grid {
 				do {
 					cnt = 0;
 					for (int j = 0; j < i; j++) {
-						
+
 						// Checks if the coordinates are empty for the person to be placed.
 						if (x == ppl.get(j).getCoordinates().getX() && y == ppl.get(j).getCoordinates().getY()) {
 							cnt = 1;
@@ -76,15 +76,15 @@ public class Movement extends Grid {
 
 			}
 			point = new Point(x, y);
-			 ppl.get(i).updateCoordinates(point);
+			ppl.get(i).updateCoordinates(point);
 		}
 
 		// Draws all the people that are previously created on the grid.
 		for (int i = 0; i < crowd; i++) {
 
-			 ppl.get(i).drawPerson();
+			ppl.get(i).drawPerson();
 		}
-		
+
 		return ppl;
 	}
 

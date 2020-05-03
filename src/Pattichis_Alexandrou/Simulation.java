@@ -169,7 +169,7 @@ public class Simulation {
 
 					// Reads the width of the grid
 					areas[i].readWidth();
-				
+
 					max = Math.max(areas[i].getWidth(), areas[i].getHeight());
 
 					if (areas[i].getCrowd() > areas[i].getWidth() * areas[i].getWidth())
@@ -223,10 +223,7 @@ public class Simulation {
 			areas[i].setPlaces(userDuration);
 
 			areas[i].drawInitialArea();
-			
 		}
-
-		
 
 		// Runs the simulation for the time that is given from the user
 		StdDraw.enableDoubleBuffering();

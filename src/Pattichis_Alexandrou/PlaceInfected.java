@@ -58,9 +58,11 @@ public class PlaceInfected extends Movement {
 	public void setDuration(ArrayList<Person> ppl) {
 		for (int i = 0; i < crowd; i++) {
 			if (((Person) ppl.get(i)).isInfected() && !((Person) ppl.get(i)).wearsProtection())
-				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] = time + 1;
+				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates()
+						.getY()] = time + 1;
 			else if (((Person) ppl.get(i)).isInfected() && ((Person) ppl.get(i)).wearsProtection())
-				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] = time;
+				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates()
+						.getY()] = time;
 		}
 	}
 
@@ -70,20 +72,22 @@ public class PlaceInfected extends Movement {
 	 * 
 	 * @param p A type Person array that stores all the information for the people
 	 */
-	public void placeAffectsPeople(ArrayList<Person> ppl,int noMask,int mask) {
+	public void placeAffectsPeople(ArrayList<Person> ppl, int noMask, int mask) {
 		int x = (int) Math.random() * 100;
 		for (int i = 0; i < crowd; i++) {
-			if (duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] > 0 && !((Person) ppl.get(i)).isImmune())
-				if(noMask==-1) {
-				if (((Person) ppl.get(i)).wearsProtection() && x < 30)
-					((Person) ppl.get(i)).setInfected(true);
-				else if (!((Person) ppl.get(i)).wearsProtection() && x < 60)
-					((Person) ppl.get(i)).setInfected(true);}
-				else {
-					if (((Person) ppl.get(i)).wearsProtection() && x <mask)
+			if (duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates()
+					.getY()] > 0 && !((Person) ppl.get(i)).isImmune())
+				if (noMask == -1) {
+					if (((Person) ppl.get(i)).wearsProtection() && x < 30)
+						((Person) ppl.get(i)).setInfected(true);
+					else if (!((Person) ppl.get(i)).wearsProtection() && x < 60)
+						((Person) ppl.get(i)).setInfected(true);
+				} else {
+					if (((Person) ppl.get(i)).wearsProtection() && x < mask)
 						((Person) ppl.get(i)).setInfected(true);
 					else if (!((Person) ppl.get(i)).wearsProtection() && x < noMask)
-						((Person) ppl.get(i)).setInfected(true);}
+						((Person) ppl.get(i)).setInfected(true);
+				}
 		}
 	}
 
