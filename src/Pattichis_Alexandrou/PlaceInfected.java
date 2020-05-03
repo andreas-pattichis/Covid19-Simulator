@@ -15,7 +15,7 @@ import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the
  */
 public class PlaceInfected extends Movement {
 	private static int[][] duration; // Stores the duration that each of the places will be infected
-	ArrayList p; // A type Person array that stores all the information for the people
+	ArrayList<Person> p; // A type Person array that stores all the information for the people
 	private int time; // The time that the simulation will be ran
 
 	/**
@@ -35,8 +35,9 @@ public class PlaceInfected extends Movement {
 	 * @param p Represents a type Person array that stores all the information for
 	 *          the people
 	 */
-	public PlaceInfected(int h, int w, int c, int t, ArrayList p) {
+	public PlaceInfected(int h, int w, int c, int t, ArrayList<Person> p) {
 		super(h, w, c);
+		System.out.println("PlaceInfected.PlaceInfected()");
 		this.p = p;
 		time = t;
 		duration = new int[w][h];
@@ -54,7 +55,7 @@ public class PlaceInfected extends Movement {
 	 * 
 	 * @param ppl A type Person array that stores all the information for the people
 	 */
-	public void setDuration(ArrayList ppl) {
+	public void setDuration(ArrayList<Person> ppl) {
 		for (int i = 0; i < crowd; i++) {
 			if (((Person) ppl.get(i)).isInfected() && !((Person) ppl.get(i)).wearsProtection())
 				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] = time + 1;
@@ -69,7 +70,7 @@ public class PlaceInfected extends Movement {
 	 * 
 	 * @param p A type Person array that stores all the information for the people
 	 */
-	public void placeAffectsPeople(ArrayList ppl,int noMask,int mask) {
+	public void placeAffectsPeople(ArrayList<Person> ppl,int noMask,int mask) {
 		int x = (int) Math.random() * 100;
 		for (int i = 0; i < crowd; i++) {
 			if (duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates().getY()] > 0 && !((Person) ppl.get(i)).isImmune())

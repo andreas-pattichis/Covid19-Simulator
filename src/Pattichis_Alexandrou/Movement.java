@@ -37,8 +37,8 @@ public class Movement extends Grid {
 	 * setPeople() method is udes to print people at the beginning of the game with
 	 * their starting position by calling the method startingPoint()
 	 */
-	public void setPeople(Person[] p) {
-		people = startingPoint(p);
+	public void setPeople(ArrayList<Person> pl) {
+		ppl = startingPoint(pl);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Movement extends Grid {
 	 * 
 	 * @return Represents all the people that are used for the simulation
 	 */
-	public Person[] startingPoint(Person[] p) {
+	public ArrayList<Person> startingPoint(ArrayList<Person> ppl) {
 		int x, y, cnt = 0;
 		Point point = new Point(1, 1);
 		// A table of all the persons with their position
@@ -61,8 +61,9 @@ public class Movement extends Grid {
 				do {
 					cnt = 0;
 					for (int j = 0; j < i; j++) {
+						
 						// Checks if the coordinates are empty for the person to be placed.
-						if (x == p[j].getCoordinates().getX() && y == p[j].getCoordinates().getY()) {
+						if (x == ppl.get(j).getCoordinates().getX() && y == ppl.get(j).getCoordinates().getY()) {
 							cnt = 1;
 							x = (int) (Math.random() * width);
 							y = (int) (Math.random() * height);
@@ -75,18 +76,16 @@ public class Movement extends Grid {
 
 			}
 			point = new Point(x, y);
-			p[i].updateCoordinates(point);
+			 ppl.get(i).updateCoordinates(point);
 		}
 
 		// Draws all the people that are previously created on the grid.
 		for (int i = 0; i < crowd; i++) {
 
-			p[i].drawPerson();
+			 ppl.get(i).drawPerson();
 		}
-		for (int i = 0; i < p.length; i++) {
-			ppl.add(p[i]);
-		}
-		return p;
+		
+		return ppl;
 	}
 
 	/**
@@ -179,7 +178,6 @@ public class Movement extends Grid {
 			if (ppl.get(i).getCoordinates().getX() == 2 && ppl.get(i).getCoordinates().getY() == 2) {
 
 				ppl.remove(i);
-				System.out.println("true");
 				crowd--;
 				break;
 			}

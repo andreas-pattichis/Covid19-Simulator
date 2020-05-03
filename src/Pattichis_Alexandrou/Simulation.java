@@ -169,7 +169,7 @@ public class Simulation {
 
 					// Reads the width of the grid
 					areas[i].readWidth();
-
+				
 					max = Math.max(areas[i].getWidth(), areas[i].getHeight());
 
 					if (areas[i].getCrowd() > areas[i].getWidth() * areas[i].getWidth())
@@ -215,7 +215,6 @@ public class Simulation {
 
 		for (int i = 0; i < sumAreas; i++) {
 			areas[i].setPeople();
-
 			if (areas[i].getHeight() >= 20 && areas[i].getHeight() >= 20)
 				System.out.println("\nPlease wait a few seconds...\n");
 
@@ -224,6 +223,7 @@ public class Simulation {
 			areas[i].setPlaces(userDuration);
 
 			areas[i].drawInitialArea();
+			
 		}
 
 		
