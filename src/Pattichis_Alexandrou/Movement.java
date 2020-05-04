@@ -113,6 +113,7 @@ public class Movement extends Grid {
 	 * @return A boolean value that shows if the Point is empty
 	 */
 	public boolean checkEmpty(Point p) {
+			//System.out.println(crowd);
 		for (int i = 0; i < crowd; i++)
 			if (p.equals(ppl.get(i).getCoordinates()))
 				return false;
@@ -173,15 +174,7 @@ public class Movement extends Grid {
 	 */
 	public ArrayList<Person> move(int max, int noMask, int mask) {
 		Point check = new Point(0, 0);
-	/*	for (int i = 0; i < crowd; i++) {
-
-			if (ppl.get(i).getCoordinates().getX() == 2 && ppl.get(i).getCoordinates().getY() == 2) {
-
-				ppl.remove(i);
-				crowd--;
-				break;
-			}
-		}*/
+	
 
 		for (int i = 0; i < crowd; i++) {
 			if (withinMargins(((Person) ppl.get(i)).getCoordinates()))

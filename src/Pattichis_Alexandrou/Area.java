@@ -212,7 +212,7 @@ public class Area {
 			String b = input.nextLine();
 			int nBorders = Integer.parseInt(b);
 			if (nBorders <= 0)
-				throw new ProbabilitiesOptionException("The borders sould be more than 1 or more!");
+				throw new ProbabilitiesOptionException("The borders sould be 1 or more!");
 			if (nBorders > (this.height * 2 + this.height * 2))
 				throw new ProbabilitiesOptionException(
 						"Insert a number that is equal or less than the perimeter of the border!");
@@ -248,14 +248,16 @@ public class Area {
 						throw new ProbabilitiesOptionException(
 								"Give the points successively and you should give them in order!..\ne.g. Give points like (2,0)->(3,0)->(4,0)!!");
 				}
-
+				
 			}
 		}
 
 		else
 			numBorders = 0;
 	}
-
+	public void DrawBorders(Point[ ]b) {
+		
+	}
 	public int getNumBorders() {
 		return numBorders;
 	}
@@ -314,7 +316,6 @@ public class Area {
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 		int max = Math.max(this.width, this.height);
 		a.createGrid(max); // Draws the grid
-
 		x.setPeople(pl); // Draws the people
 		a.createGrid(max); // Draws the grid again
 
@@ -335,7 +336,7 @@ public class Area {
 			System.out.println(this.numImmune + " person that is immune.\n\\n");
 
 	}
-	ArrayList<Person> kl=new ArrayList<Person>();
+	ArrayList<Person> movePl=new ArrayList<Person>();
 int k=0;
 	public void drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
 		int max = Math.max(this.width, this.height);
@@ -344,18 +345,28 @@ int k=0;
 
 		// x.setPeople(pl);
 		System.out.println(pl.size());
-		places.setDuration(x.getPeople());
+		places.setDuration(x.getPeople(),crowd);
 		
 		// if (numBorders != 0)
 		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
 		// else
 		// places.placeAffectsPeople(x.getPeople(), -1, -1);
 		// if (numBorders != 0)
-		kl=x.move(max, peopleVirus, peopleMask);
+		movePl=x.move(max, peopleVirus, peopleMask);
 		places.PrintInfection();
 		a.createGrid(max); // Draws the grid again
-		for (int i = 0; i < kl.size(); i++) {
-			kl.get(i).drawPerson();
+		for (int i = 0; i < movePl.size(); i++) {
+			
+
+			if (movePl.get(i).getCoordinates().getX() == 2 && movePl.get(i).getCoordinates().getY() == 2) {
+
+				movePl.remove(i);
+				x.crowd--;
+				places.crowd--;
+				i--;
+			}
+	
+			else movePl.get(i).drawPerson();
 		}
 		// else
 		// x.move(max, -1, -1);
