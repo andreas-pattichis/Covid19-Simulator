@@ -367,7 +367,6 @@ int k=0;
 		for (int i = 0; i < movePl.size(); i++) {
 			if(numBorders>0) {
 			for (int j = 0; j < numBorders; j++) {
-				
 			
 			if (movePl.get(i).getCoordinates().getX() == borders[j].getX() && movePl.get(i).getCoordinates().getY()== borders[j].getY()){
 
