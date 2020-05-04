@@ -18,6 +18,7 @@ public class PlaceInfected extends Movement {
 	ArrayList<Person> p; // A type Person array that stores all the information for the people
 	private int time; // The time that the simulation will be ran
 	private int beginPl;
+
 	/**
 	 * PlaceInfected constructor that takes four integers and one Person[] as
 	 * inputs:h,w,c,t,p. It calls the super constructor for h,w and c super(h,w,c).
@@ -40,7 +41,7 @@ public class PlaceInfected extends Movement {
 		this.p = p;
 		time = t;
 		duration = new int[w][h];
-		
+
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				duration[i][j] = 0;
@@ -55,7 +56,7 @@ public class PlaceInfected extends Movement {
 	 * 
 	 * @param ppl A type Person array that stores all the information for the people
 	 */
-	public void setDuration(ArrayList<Person> ppl,int c) {
+	public void setDuration(ArrayList<Person> ppl, int c) {
 		for (int i = 0; i < crowd; i++) {
 			if (((Person) ppl.get(i)).isInfected() && !((Person) ppl.get(i)).wearsProtection())
 				duration[((Person) ppl.get(i)).getCoordinates().getX()][((Person) ppl.get(i)).getCoordinates()
@@ -96,7 +97,7 @@ public class PlaceInfected extends Movement {
 	 * YELLOW
 	 */
 	public void PrintInfection() {
-		//System.out.println(width+" "+height);
+		// System.out.println(width+" "+height);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				if (duration[i][j] > 0) {

@@ -212,7 +212,7 @@ public class Simulation {
 				System.out.println("Put a number to the input" + "\n");
 			}
 		}
-		
+
 		for (int i = 0; i < sumAreas; i++) {
 			areas[i].setPeople();
 			if (areas[i].getHeight() >= 20 && areas[i].getHeight() >= 20)
@@ -223,24 +223,40 @@ public class Simulation {
 			areas[i].setPlaces(userDuration);
 			StdDraw.enableDoubleBuffering();
 			areas[i].drawInitialArea();
-			
-			
+
 			delay();
 			StdDraw.show();
 			StdDraw.pause(6);
 		}
-
+		ArrayList<Person>[] transportedPeople = new ArrayList[sumAreas];
+		char[] names = new char[sumAreas];
 		// Runs the simulation for the time that is given from the user
-		
+
 		// Person[] Arr=new Person[userCrowd];
-		for (int i = 0; i < userTime - 1; i++)
+		for (int i = 0; i < userTime - 1; i++) {
+
+			// initializing
 			for (int j = 0; j < sumAreas; j++) {
-				if (opt == 1)
-					areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
-				else {
-					
-					areas[j].drawEachStep(-1, -1, -1, -1);}
+				transportedPeople[j] = new ArrayList<Person>();
+				names[j] = 0;
 			}
+
+			for (int j = 0; j < sumAreas; j++) {
+				if (opt == 1) {
+					transportedPeople[j] = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
+					names[j] = areas[j].getBordersWith().charAt(0);
+				} else {
+					transportedPeople[j] = areas[j].drawEachStep(-1, -1, -1, -1);
+				}
+			}
+			for (int namesIdx = 0; namesIdx < sumAreas; namesIdx++) {
+				for (int j = 0; j < sumAreas; j++) {
+					if (areas[j].getName() == names[namesIdx]) {
+						areas[j].addNewPeople(transportedPeople[j]);
+					}
+				}
+			}
+		}
 		/*
 		 * ArrayList Array=new ArrayList(); for (int i = 0; i < Arr.length; i++) {
 		 * Array.add(Arr[i]); } for (int i = 0; i < Array.size(); i++) {

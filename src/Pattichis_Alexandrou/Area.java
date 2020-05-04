@@ -99,7 +99,15 @@ public class Area {
 	public int getCrowd() {
 		return crowd;
 	}
+	
+	public char getName() {
+		return this.name;
+	}
 
+	public String getBordersWith() {
+		return this.bordersWith;
+	}
+	
 	public void readNumInfected() throws NegativeNumberException, InfectedLessThanOneException, OvercrowdedException {
 		// Reads the number of infected people
 		System.out.print("\nThe number of infected people " + "for area " + name + ": ");
@@ -248,22 +256,24 @@ public class Area {
 						throw new ProbabilitiesOptionException(
 								"Give the points successively and you should give them in order!..\ne.g. Give points like (2,0)->(3,0)->(4,0)!!");
 				}
-				
+
 			}
 		}
 
 		else
 			numBorders = 0;
 	}
+
 	public void DrawBorders() {
-		
-		for (int i = 0; i <numBorders; i++) {
+
+		for (int i = 0; i < numBorders; i++) {
 			System.out.println(i);
 			StdDraw.setPenColor(StdDraw.PINK);
 			StdDraw.filledSquare(borders[i].getX() + 0.5, borders[i].getY() + 0.5, 0.5);
-			
-			}
+
+		}
 	}
+
 	public int getNumBorders() {
 		return numBorders;
 	}
@@ -343,48 +353,66 @@ public class Area {
 			System.out.println(this.numImmune + " person that is immune.\n\\n");
 
 	}
-	ArrayList<Person> movePl=new ArrayList<Person>();
-int k=0;
-	public void drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
+
+	ArrayList<Person> movePl = new ArrayList<Person>();
+	int k = 0;
+
+	
+	public ArrayList<Person> drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
+		ArrayList<Person> transportedPeople = new ArrayList<Person>();
+		
 		int max = Math.max(this.width, this.height);
 		StdDraw.enableDoubleBuffering();
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 
 		// x.setPeople(pl);
 		System.out.println(pl.size());
-		places.setDuration(x.getPeople(),crowd);
-		
+		places.setDuration(x.getPeople(), crowd);
+
 		// if (numBorders != 0)
 		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
 		// else
 		// places.placeAffectsPeople(x.getPeople(), -1, -1);
 		// if (numBorders != 0)
-		movePl=x.move(max, peopleVirus, peopleMask);
+		movePl = x.move(max, peopleVirus, peopleMask);
 		DrawBorders();
 		places.PrintInfection();
 
 		a.createGrid(max); // Draws the grid again
+		
 		for (int i = 0; i < movePl.size(); i++) {
-			if(numBorders>0) {
-			for (int j = 0; j < numBorders; j++) {
-			
-			if (movePl.get(i).getCoordinates().getX() == borders[j].getX() && movePl.get(i).getCoordinates().getY()== borders[j].getY()){
+			if (numBorders > 0) {
+				for (int j = 0; j < numBorders; j++) {
 
-				movePl.remove(i);
-				x.crowd--;
-				places.crowd--;
-				i--;
-			}
-	
-			else movePl.get(i).drawPerson();}
+					if (movePl.get(i).getCoordinates().getX() == borders[j].getX()
+							&& movePl.get(i).getCoordinates().getY() == borders[j].getY()) {
+
+						transportedPeople.add(movePl.get(i));
+						
+						movePl.remove(i);
+						x.crowd--;
+						places.crowd--;
+						i--;
+					}
+
+					else
+						movePl.get(i).drawPerson();
+				}
+			} else
+				movePl.get(i).drawPerson();
 		}
-		else  movePl.get(i).drawPerson();}
+				
 		// else
 		// x.move(max, -1, -1);
 		delay();
 		StdDraw.show();
 		StdDraw.pause(6);
 		k++;
+		
+		if (numBorders > 0)
+			return transportedPeople;
+		
+		return null;
 	}
 
 	public void printFinalStaticsforArea() {
@@ -425,5 +453,23 @@ int k=0;
 		if (finalSumInfected - this.numInfected >= 2)
 			System.out.println("As you can see, with these results is important to STAY HOME!!\n\\n");
 	}
+	
+	public void addNewPeople(ArrayList<Person> transportedPeople){
+		ArrayList ppl = x.getPeople();
+		
+		for (int i = 0; i < transportedPeople.size(); i++)
+			ppl.add(i);
+		
+		x.setPl(ppl,transportedPeople.size());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

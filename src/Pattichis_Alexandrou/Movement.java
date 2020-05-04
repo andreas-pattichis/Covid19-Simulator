@@ -41,6 +41,28 @@ public class Movement extends Grid {
 		ppl = startingPoint(pl);
 	}
 
+	public void setPl(ArrayList<Person> pl, int size) {
+		ppl = pl;
+		crowd =ppl.size();
+		
+		Point check = new Point(0, 0);
+
+		for (int i = size - 1; i < pl.size(); i++) {
+
+			boolean moved = false;
+			while (!moved) {
+
+				check = new Point((int) Math.random() * super.height, (int) Math.random() * super.width);
+
+				if (checkEmpty(check) && withinMargins(check)) {
+					moved = true;
+					(ppl.get(i)).updateCoordinates(check);
+					//PersonInfected inf = new PersonInfected((ppl.get(i)), this);
+				}
+			}
+		}
+	}
+
 	/**
 	 * startingPoint() method is used to create all the persons, assign them at
 	 * their starting points and draw them on the simulation. It makes sure that
@@ -113,7 +135,7 @@ public class Movement extends Grid {
 	 * @return A boolean value that shows if the Point is empty
 	 */
 	public boolean checkEmpty(Point p) {
-			//System.out.println(crowd);
+		// System.out.println(crowd);
 		for (int i = 0; i < crowd; i++)
 			if (p.equals(ppl.get(i).getCoordinates()))
 				return false;
@@ -174,9 +196,8 @@ public class Movement extends Grid {
 	 */
 	public ArrayList<Person> move(int max, int noMask, int mask) {
 		Point check = new Point(0, 0);
-	
 
-		for (int i = 0; i < crowd; i++) {
+		for (int i = 0; i < ppl.size(); i++) {
 			if (withinMargins(((Person) ppl.get(i)).getCoordinates()))
 				if (choiceToMove()) {
 					boolean[] directions = new boolean[9];
@@ -214,9 +235,9 @@ public class Movement extends Grid {
 
 		for (int i = 0; i < ppl.size(); i++) {
 			System.out.println(ppl.get(i).getCoordinates().getX() + " " + ppl.get(i).getCoordinates().getY());
-			//((Person) ppl.get(i)).drawPerson();
+			// ((Person) ppl.get(i)).drawPerson();
 		}
-		
+
 		System.out.println("\n");
 		return ppl;
 	}
