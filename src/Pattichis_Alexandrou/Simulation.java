@@ -223,6 +223,8 @@ public class Simulation {
 			areas[i].setPlaces(userDuration);
 			StdDraw.enableDoubleBuffering();
 			areas[i].drawInitialArea();
+			
+			
 			delay();
 			StdDraw.show();
 			StdDraw.pause(6);

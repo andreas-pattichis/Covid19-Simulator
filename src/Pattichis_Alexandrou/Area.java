@@ -255,8 +255,14 @@ public class Area {
 		else
 			numBorders = 0;
 	}
-	public void DrawBorders(Point[ ]b) {
+	public void DrawBorders() {
 		
+		for (int i = 0; i <numBorders; i++) {
+			System.out.println(i);
+			StdDraw.setPenColor(StdDraw.PINK);
+			StdDraw.filledSquare(borders[i].getX() + 0.5, borders[i].getY() + 0.5, 0.5);
+			
+			}
 	}
 	public int getNumBorders() {
 		return numBorders;
@@ -317,6 +323,7 @@ public class Area {
 		int max = Math.max(this.width, this.height);
 		a.createGrid(max); // Draws the grid
 		x.setPeople(pl); // Draws the people
+		DrawBorders();
 		a.createGrid(max); // Draws the grid again
 
 		System.out.println("---------------------------------------------------------------");
@@ -353,12 +360,16 @@ int k=0;
 		// places.placeAffectsPeople(x.getPeople(), -1, -1);
 		// if (numBorders != 0)
 		movePl=x.move(max, peopleVirus, peopleMask);
+		DrawBorders();
 		places.PrintInfection();
+
 		a.createGrid(max); // Draws the grid again
 		for (int i = 0; i < movePl.size(); i++) {
 			
-
-			if (movePl.get(i).getCoordinates().getX() == 2 && movePl.get(i).getCoordinates().getY() == 2) {
+			for (int j = 0; j < numBorders; j++) {
+				
+			
+			if (movePl.get(i).getCoordinates().getX() == borders[j].getX() && movePl.get(i).getCoordinates().getY()== borders[j].getY()){
 
 				movePl.remove(i);
 				x.crowd--;
@@ -366,7 +377,7 @@ int k=0;
 				i--;
 			}
 	
-			else movePl.get(i).drawPerson();
+			else movePl.get(i).drawPerson();}
 		}
 		// else
 		// x.move(max, -1, -1);
