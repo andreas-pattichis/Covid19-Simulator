@@ -365,7 +365,7 @@ int k=0;
 
 		a.createGrid(max); // Draws the grid again
 		for (int i = 0; i < movePl.size(); i++) {
-			
+			if(numBorders>0) {
 			for (int j = 0; j < numBorders; j++) {
 				
 			
@@ -379,6 +379,7 @@ int k=0;
 	
 			else movePl.get(i).drawPerson();}
 		}
+		else  movePl.get(i).drawPerson();}
 		// else
 		// x.move(max, -1, -1);
 		delay();
