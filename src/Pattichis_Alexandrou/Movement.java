@@ -41,6 +41,7 @@ public class Movement extends Grid {
 		ppl = startingPoint(pl);
 	}
 
+	/*
 	public void setPl(ArrayList<Person> pl, int size) {
 		ppl = pl;
 		crowd =ppl.size();
@@ -62,7 +63,7 @@ public class Movement extends Grid {
 			}
 		}
 	}
-
+*/
 	/**
 	 * startingPoint() method is used to create all the persons, assign them at
 	 * their starting points and draw them on the simulation. It makes sure that
@@ -197,7 +198,7 @@ public class Movement extends Grid {
 	public ArrayList<Person> move(int max, int noMask, int mask) {
 		Point check = new Point(0, 0);
 
-		for (int i = 0; i < ppl.size(); i++) {
+		for (int i = 0; i < crowd; i++) {
 			if (withinMargins(((Person) ppl.get(i)).getCoordinates()))
 				if (choiceToMove()) {
 					boolean[] directions = new boolean[9];

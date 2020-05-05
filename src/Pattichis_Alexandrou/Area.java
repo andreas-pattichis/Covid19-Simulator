@@ -381,7 +381,7 @@ public class Area {
 		a.createGrid(max); // Draws the grid again
 		
 		for (int i = 0; i < movePl.size(); i++) {
-			if (numBorders > 0 && peopleVirus!=-1) {
+			if (numBorders > 0 /*&& peopleVirus!=-1*/) {
 				for (int j = 0; j < numBorders; j++) {
 
 					if (movePl.get(i).getCoordinates().getX() == borders[j].getX()
@@ -408,7 +408,7 @@ public class Area {
 		StdDraw.show();
 		StdDraw.pause(6);
 		k++;
-		x.setPl(movePl, movePl.size());
+	//	x.setPl(movePl, movePl.size());
 		
 		
 		if (numBorders > 0)
@@ -456,6 +456,7 @@ public class Area {
 			System.out.println("As you can see, with these results is important to STAY HOME!!\n\\n");
 	}
 	
+	/*
 	public void addNewPeople(ArrayList<Person> transportedPeople){
 		ArrayList ppl = x.getPeople();
 		
@@ -463,7 +464,7 @@ public class Area {
 			ppl.add(i);
 		
 		x.setPl(ppl,transportedPeople.size());
-	}
+	}/*/
 	
 	
 	

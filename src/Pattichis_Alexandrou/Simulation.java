@@ -236,26 +236,30 @@ public class Simulation {
 		for (int i = 0; i < userTime - 1; i++) {
 
 			// initializing
+			/*
 			for (int j = 0; j < sumAreas; j++) {
 				transportedPeople[j] = new ArrayList<Person>();
 				names[j] = 0;
-			}
+			}*/
 
 			for (int j = 0; j < sumAreas; j++) {
 				if (opt == 1) {
-					transportedPeople[j] = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
-					names[j] = areas[j].getBordersWith().charAt(0);
+					areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
+					//transportedPeople[j] = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
+					//names[j] = areas[j].getBordersWith().charAt(0);
 				} else {
-					transportedPeople[j] = areas[j].drawEachStep(-1, -1, -1, -1);
+					//transportedPeople[j] = areas[j].drawEachStep(-1, -1, -1, -1);
+					areas[j].drawEachStep(-1, -1, -1, -1);
 				}
 			}
+			/*
 			for (int namesIdx = 0; namesIdx < sumAreas; namesIdx++) {
 				for (int j = 0; j < sumAreas; j++) {
 					if (areas[j].getName() == names[namesIdx]) {
 						areas[j].addNewPeople(transportedPeople[j]);
 					}
 				}
-			}
+			}*/
 		}
 		/*
 		 * ArrayList Array=new ArrayList(); for (int i = 0; i < Arr.length; i++) {
