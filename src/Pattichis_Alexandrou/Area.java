@@ -326,15 +326,33 @@ public class Area {
 			Thread.currentThread().interrupt();
 		}
 	}
-
+	ArrayList<Person> movePl = new ArrayList<Person>();
+	ArrayList<Person> movePl2 = new ArrayList<Person>();
 	public void drawInitialArea() {
 
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 		int max = Math.max(this.width, this.height);
 		a.createGrid(max); // Draws the grid
-		x.setPeople(pl); // Draws the people
 		DrawBorders();
-		a.createGrid(max); // Draws the grid again
+		a.createGrid(max);
+		movePl=x.setPeople(pl); // Draws the people
+		for (int i = 0; i < movePl.size(); i++) {
+			if (numBorders > 0 /*&& peopleVirus!=-1*/) {
+				for (int j = 0; j < numBorders; j++) {
+					//System.out.println("i:"+i+" "+"j:"+j);
+					if (movePl.get(i).getCoordinates().getX() == borders[j].getX()
+							&& movePl.get(i).getCoordinates().getY() == borders[j].getY()) {
+						if(x.move2(movePl.get(i))==false) {
+						movePl.remove(i);
+						x.crowd--;
+						places.crowd--;}
+					
+					}
+				}
+			}
+		}
+		
+		 // Draws the grid again
 
 		System.out.println("---------------------------------------------------------------");
 		// Prints the statistics
@@ -354,7 +372,7 @@ public class Area {
 
 	}
 
-	ArrayList<Person> movePl = new ArrayList<Person>();
+	
 	int k = 0;
 
 	
@@ -379,27 +397,29 @@ public class Area {
 		places.PrintInfection();
 
 		a.createGrid(max); // Draws the grid again
-		
+		for (int i = 0; i < movePl.size(); i++) {
+			movePl.get(i).drawPerson();
+		}
 		for (int i = 0; i < movePl.size(); i++) {
 			if (numBorders > 0 /*&& peopleVirus!=-1*/) {
 				for (int j = 0; j < numBorders; j++) {
-
+					if(!movePl.isEmpty()) {
 					if (movePl.get(i).getCoordinates().getX() == borders[j].getX()
 							&& movePl.get(i).getCoordinates().getY() == borders[j].getY()) {
 
-						transportedPeople.add(movePl.get(i));
+						//transportedPeople.add(movePl.get(i));
 						
-						movePl.remove(i);
-						x.crowd--;
-						places.crowd--;
-						i--;
-					}
+						if(x.move2(movePl.get(i))==false) {
+							movePl.remove(i);
+							x.crowd--;
+							places.crowd--;
+							if(i>0)
+								i--;
+					}}}
 
-					else
-						movePl.get(i).drawPerson();
+					
 				}
-			} else
-				movePl.get(i).drawPerson();
+			}
 		}
 				
 		// else

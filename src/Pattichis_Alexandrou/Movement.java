@@ -37,8 +37,9 @@ public class Movement extends Grid {
 	 * setPeople() method is udes to print people at the beginning of the game with
 	 * their starting position by calling the method startingPoint()
 	 */
-	public void setPeople(ArrayList<Person> pl) {
+	public ArrayList<Person> setPeople(ArrayList<Person> pl) {
 		ppl = startingPoint(pl);
+		return ppl;
 	}
 
 	/*
@@ -126,7 +127,7 @@ public class Movement extends Grid {
 				return true;
 		return false;
 	}
-
+	
 	/**
 	 * checkEmpty() method takes one Point as a parameter: p. It checks if there is
 	 * not someone else at the current time in that position
@@ -239,10 +240,32 @@ public class Movement extends Grid {
 			// ((Person) ppl.get(i)).drawPerson();
 		}
 
-		System.out.println("\n");
 		return ppl;
 	}
+	public boolean move2(Person p) {
+		Point check = new Point(0, 0);
 
+	
+			if (withinMargins(p.getCoordinates()))
+				if (choiceToMove()) {
+					boolean[] directions = new boolean[9];
+					for (int j = 0; j < 9; j++)
+						directions[j] = false;
+
+						check = new Point((p.getCoordinates().getX()),
+								((Person) p).getCoordinates().getY());
+
+						int dir = (int) (Math.random() * 9) + 1;
+
+						check = new Point(((Person) p).getCoordinates().getX() + moveTo(dir).getX(),
+								((Person) p).getCoordinates().getY() + moveTo(dir).getY());
+			
+						}
+					
+		if(!withinMargins(check))
+			System.out.println("OUT");
+		return  withinMargins(check);
+	}
 	/*
 	 * public ArrayList<Person> move2 (ArrayList<Person> a) { for (int i = 0; i
 	 * <a.size(); i++) { if(((Person) a.get(i)).getCoordinates()==new Point (2,2))
