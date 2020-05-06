@@ -225,14 +225,37 @@ public class Simulation {
 		}
 
 		for (int i = 0; i < userTime - 1; i++) {
+			ArrayList<Person>[] allTransportedPeople = new ArrayList[sumAreas];
+			for (int k = 0; k < sumAreas; k++)
+				allTransportedPeople[k] = new ArrayList<Person>();
+			
+			ArrayList<Character>[] allNames = new ArrayList[sumAreas];
+			for (int k = 0; k < sumAreas; k++)
+				allNames[k] = new ArrayList<Character>();
 
 			for (int j = 0; j < sumAreas; j++) {
-				if (opt == 1) {
-					areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
-				} else {
-					areas[j].drawEachStep(-1, -1, -1, -1);
-				}
+				ArrayList<Person>[] transportedPeopleOfArea;
+				if (opt == 1)
+					transportedPeopleOfArea = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
+				else
+					transportedPeopleOfArea = areas[j].drawEachStep(-1, -1, -1, -1);
+
+				ArrayList<Character>[] namesOfTheBorders = areas[j].getNamesOfTheBorders();
+
+				for (int k = 0; k < transportedPeopleOfArea.length; k++)
+					for (int z = 0; z < transportedPeopleOfArea[k].size(); z++) {
+						allTransportedPeople[j].add(transportedPeopleOfArea[k].get(z));
+						allNames[j].add(namesOfTheBorders[k].get(z));
+					}
+
 			}
+			for (int k = 0; k < allTransportedPeople.length; k++)
+				for (int z = 0; z < allTransportedPeople[k].size(); z++) {
+					for (int j = 0; j < sumAreas; j++) {
+						if (areas[j].getName() == allNames[k].get(z))
+							areas[j].addPersonToArea(allTransportedPeople[k].get(z));
+					}
+				}
 		}
 		for (int i = 0; i < sumAreas; i++) {
 
