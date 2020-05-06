@@ -141,7 +141,7 @@ public class Simulation {
 				}
 				System.out.println("---------------------------------------------------------------");
 				System.out.println("Also please tell us:");
-				System.out.println("The number of areas that people will interact: ");
+				System.out.print("The number of areas that people will interact: ");
 				places = input.nextLine();
 				sumAreas = Integer.parseInt(places);
 				if (sumAreas < 0)

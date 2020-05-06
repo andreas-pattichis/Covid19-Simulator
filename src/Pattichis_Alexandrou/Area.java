@@ -19,7 +19,6 @@ public class Area {
 	private int width;
 	private int numBorders;
 	private ArrayList<Point>[] bordersForEachArea = new ArrayList[1];
-	// private Point[] borders;
 	private Person[] people = null;
 	private ArrayList<Person> pl = new ArrayList<Person>();
 	private Grid a;
@@ -209,12 +208,13 @@ public class Area {
 		if (option == 1) {
 			System.out.print("\nWith how many areas do you want area " + this.name + " to border with?");
 			String nAreas = input.nextLine();
-			int numOfAreas = Integer.parseInt(nAreas);
+			numOfAreas = Integer.parseInt(nAreas);
 			if (numOfAreas <= 0)
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
 			bordersWith = new char[numOfAreas];
-//fix
+			bordersForEachArea = new ArrayList[numOfAreas];
+			
 			for (int k = 0; k < numOfAreas; k++)
 				bordersForEachArea[k] = new ArrayList<Point>();
 
@@ -282,7 +282,7 @@ public class Area {
 	public void DrawBorders() {
 
 		for (int k = 0; k < numOfAreas; k++)
-			for (int i = 0; i < numBorders; i++) {
+			for (int i = 0; i < bordersForEachArea[k].size(); i++) {
 				Point check = new Point(bordersForEachArea[k].get(i));
 				System.out.println(i);
 				StdDraw.setPenColor(StdDraw.PINK);
