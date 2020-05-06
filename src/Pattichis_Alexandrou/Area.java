@@ -9,7 +9,8 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Area {
 	private char name;
-	private String bordersWith;
+	private int numOfAreas;
+	private char bordersWith[];
 	private int crowd;
 	private int numInfected;
 	private int numImmune;
@@ -17,7 +18,8 @@ public class Area {
 	private int height;
 	private int width;
 	private int numBorders;
-	private Point[] borders;
+	private ArrayList<Point>[] bordersForEachArea = new ArrayList[1];
+	// private Point[] borders;
 	private Person[] people = null;
 	private ArrayList<Person> pl = new ArrayList<Person>();
 	private Grid a;
@@ -99,15 +101,15 @@ public class Area {
 	public int getCrowd() {
 		return crowd;
 	}
-	
+
 	public char getName() {
 		return this.name;
 	}
 
-	public String getBordersWith() {
+	public char[] getBordersWith() {
 		return this.bordersWith;
 	}
-	
+
 	public void readNumInfected() throws NegativeNumberException, InfectedLessThanOneException, OvercrowdedException {
 		// Reads the number of infected people
 		System.out.print("\nThe number of infected people " + "for area " + name + ": ");
@@ -202,60 +204,71 @@ public class Area {
 		int option = Integer.parseInt(o);
 
 		if (option > 1 || option < 0)
-			throw new ProbabilitiesOptionException("Insert a number that is either 0 or 1");
+			throw new ProbabilitiesOptionException("\nInsert a number that is either 0 or 1");
 
 		if (option == 1) {
-			System.out.print("\nWith which area do you want area " + name + " to be bordered with");
-			bordersWith = input.nextLine();
-			// if (towns.length() > 1 || towns.charAt(0) - 65 > sumAreas - 1 ||
-			// towns.charAt(0) - 65 < 0
-			// || towns.charAt(0) - 65 > 91 - 65 || towns.charAt(0) - 65 - i == 0)
-			// throw new ProbabilitiesOptionException("Give the name of the area that exist
-			// e.g 'A' ");
-			// town[i] = towns.charAt(0) - 65 + 1;
-			// if (userCrowd < 0)
-			// throw new NegativeNumberException();
+			System.out.print("\nWith how many areas do you want area " + this.name + " to border with?");
+			String nAreas = input.nextLine();
+			int numOfAreas = Integer.parseInt(nAreas);
+			if (numOfAreas <= 0)
+				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
-			System.out.println("How many borders do you want for the area?");
-			String b = input.nextLine();
-			int nBorders = Integer.parseInt(b);
-			if (nBorders <= 0)
-				throw new ProbabilitiesOptionException("The borders sould be 1 or more!");
-			if (nBorders > (this.height * 2 + this.height * 2))
-				throw new ProbabilitiesOptionException(
-						"Insert a number that is equal or less than the perimeter of the border!");
-			numBorders = nBorders;
+			bordersWith = new char[numOfAreas];
 
-			System.out.println("Give the area on the grid for the borders in points(e.g 2,0)"
-					+ "\n(The points should be on the border of the grid, successively and you should give them in order!");
-			borders = new Point[numBorders];
-			for (int i = 0; i < numBorders; i++) {
-				System.out.println(i + 1 + ") ");
-				String coordinates = input.nextLine();
-				borders[i] = Input(coordinates);
-				if (borders[i].getX() == -1 || borders[i].getY() == -1)
+			for (int k = 0; k < numOfAreas; k++)
+				bordersForEachArea[k] = new ArrayList<Point>();
+
+			for (int k = 0; k < numOfAreas; k++) {
+				System.out.print("\nWith which area do you want area " + name + " to be bordered with");
+				bordersWith[k] = input.nextLine().charAt(0);
+
+				System.out.println("\nHow many borders do you want for the area?");
+				String b = input.nextLine();
+				int nBorders = Integer.parseInt(b);
+				if (nBorders <= 0)
+					throw new ProbabilitiesOptionException("\nThe borders sould be 1 or more!");
+				if (nBorders > (this.height * 2 + this.height * 2))
 					throw new ProbabilitiesOptionException(
-							"Give the points correctly..\ne.g. Give a point like (2,1)!!");
-				if (borders[i].getX() > this.height || borders[i].getY() > this.width)
-					throw new ProbabilitiesOptionException(
-							"Give the points that are in the grid..\ne.g. Give a point like (2,1)!!");
-				if (!(borders[i].getX() <= this.height && borders[i].getY() == this.width
-						|| borders[i].getX() == this.height && borders[i].getY() <= this.width
-						|| borders[i].getX() == 0 && borders[i].getY() <= this.width
-						|| borders[i].getX() <= this.height && borders[i].getY() == 0))
-					throw new ProbabilitiesOptionException(
-							"Give the points that are on the border of the grid..\ne.g. Give a point like (height,0)!!");
-				if (i != 0) {
-					if (!(borders[i].getX() == borders[i - 1].getX() + 1 && borders[i].getY() == borders[i - 1].getY()
-							|| borders[i].getX() == borders[i - 1].getX() - 1
-									&& borders[i].getY() == borders[i - 1].getY()
-							|| borders[i].getX() == borders[i - 1].getX()
-									&& borders[i].getY() == borders[i - 1].getY() + 1
-							|| borders[i].getX() == borders[i - 1].getX()
-									&& borders[i].getY() == borders[i - 1].getY() - 1))
+							"\nInsert a number that is equal or less than the perimeter of the border!");
+				numBorders = nBorders;
+
+				System.out.println("\nGive the area on the grid for the borders in points(e.g 2,0)"
+						+ "\n(The points should be on the border of the grid, successively and you should give them in order!");
+
+				Point[] borders = new Point[numBorders];
+				for (int i = 0; i < numBorders; i++) {
+					System.out.println(i + 1 + ") ");
+					String coordinates = input.nextLine();
+					borders[i] = Input(coordinates);
+					if (borders[i].getX() == -1 || borders[i].getY() == -1)
 						throw new ProbabilitiesOptionException(
-								"Give the points successively and you should give them in order!..\ne.g. Give points like (2,0)->(3,0)->(4,0)!!");
+								"Give the points correctly..\ne.g. Give a point like (2,1)!!");
+					if (borders[i].getX() > this.height || borders[i].getY() > this.width)
+						throw new ProbabilitiesOptionException(
+								"Give the points that are in the grid..\ne.g. Give a point like (2,1)!!");
+					if (!(borders[i].getX() <= this.height && borders[i].getY() == this.width
+							|| borders[i].getX() == this.height && borders[i].getY() <= this.width
+							|| borders[i].getX() == 0 && borders[i].getY() <= this.width
+							|| borders[i].getX() <= this.height && borders[i].getY() == 0))
+						throw new ProbabilitiesOptionException(
+								"Give the points that are on the border of the grid..\ne.g. Give a point like (height,0)!!");
+					if (i != 0) {
+						if (!(borders[i].getX() == borders[i - 1].getX() + 1
+								&& borders[i].getY() == borders[i - 1].getY()
+								|| borders[i].getX() == borders[i - 1].getX() - 1
+										&& borders[i].getY() == borders[i - 1].getY()
+								|| borders[i].getX() == borders[i - 1].getX()
+										&& borders[i].getY() == borders[i - 1].getY() + 1
+								|| borders[i].getX() == borders[i - 1].getX()
+										&& borders[i].getY() == borders[i - 1].getY() - 1))
+							throw new ProbabilitiesOptionException(
+									"\nGive the points successively and you should give them in order!..\ne.g. Give points like (2,0)->(3,0)->(4,0)!!");
+					}
+
 				}
+
+				for (int i = 0; i < numBorders; i++)
+					bordersForEachArea[k].add(new Point(borders[i]));
 
 			}
 		}
@@ -266,20 +279,21 @@ public class Area {
 
 	public void DrawBorders() {
 
-		for (int i = 0; i < numBorders; i++) {
-			System.out.println(i);
-			StdDraw.setPenColor(StdDraw.PINK);
-			StdDraw.filledSquare(borders[i].getX() + 0.5, borders[i].getY() + 0.5, 0.5);
-
-		}
+		for (int k = 0; k < numOfAreas; k++)
+			for (int i = 0; i < numBorders; i++) {
+				Point check = new Point(bordersForEachArea[k].get(i));
+				System.out.println(i);
+				StdDraw.setPenColor(StdDraw.PINK);
+				StdDraw.filledSquare(check.getX() + 0.5, check.getY() + 0.5, 0.5);
+			}
 	}
 
 	public int getNumBorders() {
 		return numBorders;
 	}
 
-	public Point[] getBorders() {
-		return borders;
+	public ArrayList<Point>[] getBorders() {
+		return bordersForEachArea;
 	}
 
 	public void setPeople() {
@@ -326,7 +340,7 @@ public class Area {
 			Thread.currentThread().interrupt();
 		}
 	}
-	
+
 	public void drawInitialArea() {
 
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
@@ -334,24 +348,28 @@ public class Area {
 		a.createGrid(max); // Draws the grid
 		DrawBorders();
 		a.createGrid(max);
-		pl=x.setPeople(pl); // Draws the people
+
+		pl = x.setPeople(pl); // Draws the people
 		for (int i = 0; i < pl.size(); i++) {
-			if (numBorders > 0 /*&& peopleVirus!=-1*/) {
-				for (int j = 0; j < numBorders; j++) {
-					//System.out.println("i:"+i+" "+"j:"+j);
-					if (pl.get(i).getCoordinates().getX() == borders[j].getX()
-							&& pl.get(i).getCoordinates().getY() == borders[j].getY()) {
-						if(x.move2(pl.get(i))==false) {
-						pl.remove(i);
-						x.crowd--;
-						places.crowd--;}
-					
+			if (numBorders > 0) {
+				for (int k = 0; k < numOfAreas; k++) {
+					for (int j = 0; j < numBorders; j++) {
+						Point check = new Point(bordersForEachArea[k].get(j));
+						if (pl.get(i).getCoordinates().getX() == check.getX()
+								&& pl.get(i).getCoordinates().getY() == check.getY()) {
+							if (x.move2(pl.get(i)) == false) {
+								pl.remove(i);
+								x.crowd--;
+								places.crowd--;
+							}
+
+						}
 					}
 				}
 			}
 		}
-		
-		 // Draws the grid again
+
+		// Draws the grid again
 
 		System.out.println("---------------------------------------------------------------");
 		// Prints the statistics
@@ -371,26 +389,19 @@ public class Area {
 
 	}
 
-	
 	int k = 0;
 
-	
 	public ArrayList<Person> drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
 		ArrayList<Person> transportedPeople = new ArrayList<Person>();
-		
+
 		int max = Math.max(this.width, this.height);
 		StdDraw.enableDoubleBuffering();
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 
-		// x.setPeople(pl);
 		System.out.println(pl.size());
 		places.setDuration(x.getPeople(), crowd);
 
-		// if (numBorders != 0)
 		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
-		// else
-		// places.placeAffectsPeople(x.getPeople(), -1, -1);
-		// if (numBorders != 0)
 		pl = x.move(max, peopleVirus, peopleMask);
 		DrawBorders();
 		places.PrintInfection();
@@ -400,45 +411,42 @@ public class Area {
 			pl.get(i).drawPerson();
 		}
 		for (int i = 0; i < pl.size(); i++) {
-			if (numBorders > 0 /*&& peopleVirus!=-1*/) {
-				for (int j = 0; j < numBorders; j++) {
-					if(!pl.isEmpty()) {
-					if (pl.get(i).getCoordinates().getX() == borders[j].getX()
-							&& pl.get(i).getCoordinates().getY() == borders[j].getY()) {
+			if (numBorders > 0) {
+				for (int k = 0; k < numOfAreas; k++) {
+					for (int j = 0; j < numBorders; j++) {
+						if (!pl.isEmpty()) {
+							Point check = new Point(bordersForEachArea[k].get(j));
+							if (pl.get(i).getCoordinates().getX() == check.getX()
+									&& pl.get(i).getCoordinates().getY() == check.getY()) {
 
-						//transportedPeople.add(movePl.get(i));
-						
-						if(x.move2(pl.get(i))==false) {
-							pl.remove(i);
-							x.crowd--;
-							places.crowd--;
-							if(i>0)
-								i--;
-					}}}
+								if (x.move2(pl.get(i)) == false) {
+									pl.remove(i);
+									x.crowd--;
+									places.crowd--;
+									if (i > 0)
+										i--;
+								}
+							}
+						}
+					}
 
-					
 				}
 			}
 		}
-				
-		// else
-		// x.move(max, -1, -1);
+
 		delay();
 		StdDraw.show();
 		StdDraw.pause(6);
 		k++;
-	//	x.setPl(movePl, movePl.size());
-		
-		
+
 		if (numBorders > 0)
 			return transportedPeople;
-		
+
 		return null;
 	}
 
 	public void printFinalStaticsforArea() {
 
-		//ArrayList pl = new ArrayList();
 		int finalSumInfected = 0;
 		int finalSumHealthy = 0;
 		int finalSumImmune = 0;
@@ -474,24 +482,5 @@ public class Area {
 		if (finalSumInfected - this.numInfected >= 2)
 			System.out.println("As you can see, with these results is important to STAY HOME!!\n\\n");
 	}
-	
-	/*
-	public void addNewPeople(ArrayList<Person> transportedPeople){
-		ArrayList ppl = x.getPeople();
-		
-		for (int i = 0; i < transportedPeople.size(); i++)
-			ppl.add(i);
-		
-		x.setPl(ppl,transportedPeople.size());
-	}/*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -42,29 +42,6 @@ public class Movement extends Grid {
 		return ppl;
 	}
 
-	/*
-	public void setPl(ArrayList<Person> pl, int size) {
-		ppl = pl;
-		crowd =ppl.size();
-		
-		Point check = new Point(0, 0);
-
-		for (int i = size - 1; i < pl.size(); i++) {
-
-			boolean moved = false;
-			while (!moved) {
-
-				check = new Point((int) Math.random() * super.height, (int) Math.random() * super.width);
-
-				if (checkEmpty(check) && withinMargins(check)) {
-					moved = true;
-					(ppl.get(i)).updateCoordinates(check);
-					//PersonInfected inf = new PersonInfected((ppl.get(i)), this);
-				}
-			}
-		}
-	}
-*/
 	/**
 	 * startingPoint() method is used to create all the persons, assign them at
 	 * their starting points and draw them on the simulation. It makes sure that
@@ -127,7 +104,7 @@ public class Movement extends Grid {
 				return true;
 		return false;
 	}
-	
+
 	/**
 	 * checkEmpty() method takes one Point as a parameter: p. It checks if there is
 	 * not someone else at the current time in that position
@@ -242,30 +219,30 @@ public class Movement extends Grid {
 
 		return ppl;
 	}
+
 	public boolean move2(Person p) {
 		Point check = new Point(0, 0);
 
-	
-			if (withinMargins(p.getCoordinates()))
-				if (choiceToMove()) {
-					boolean[] directions = new boolean[9];
-					for (int j = 0; j < 9; j++)
-						directions[j] = false;
+		if (withinMargins(p.getCoordinates()))
+			if (choiceToMove()) {
+				boolean[] directions = new boolean[9];
+				for (int j = 0; j < 9; j++)
+					directions[j] = false;
 
-						check = new Point((p.getCoordinates().getX()),
-								((Person) p).getCoordinates().getY());
+				check = new Point((p.getCoordinates().getX()), ((Person) p).getCoordinates().getY());
 
-						int dir = (int) (Math.random() * 9) + 1;
+				int dir = (int) (Math.random() * 9) + 1;
 
-						check = new Point(((Person) p).getCoordinates().getX() + moveTo(dir).getX(),
-								((Person) p).getCoordinates().getY() + moveTo(dir).getY());
-			
-						}
-					
-		if(!withinMargins(check))
+				check = new Point(((Person) p).getCoordinates().getX() + moveTo(dir).getX(),
+						((Person) p).getCoordinates().getY() + moveTo(dir).getY());
+
+			}
+
+		if (!withinMargins(check))
 			System.out.println("OUT");
-		return  withinMargins(check);
+		return withinMargins(check);
 	}
+
 	/*
 	 * public ArrayList<Person> move2 (ArrayList<Person> a) { for (int i = 0; i
 	 * <a.size(); i++) { if(((Person) a.get(i)).getCoordinates()==new Point (2,2))
