@@ -214,7 +214,7 @@ public class Area {
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
 			bordersWith = new char[numOfAreas];
-
+//fix
 			for (int k = 0; k < numOfAreas; k++)
 				bordersForEachArea[k] = new ArrayList<Point>();
 
@@ -267,8 +267,10 @@ public class Area {
 
 				}
 
-				for (int i = 0; i < numBorders; i++)
+				for (int i = 0; i < numBorders; i++) {
+					
 					bordersForEachArea[k].add(new Point(borders[i]));
+					System.out.println(bordersForEachArea[k].get(i).getY());}
 
 			}
 		}
