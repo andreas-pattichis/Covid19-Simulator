@@ -10,7 +10,7 @@ import edu.princeton.cs.introcs.StdDraw;
 public class Area {
 	private char name;
 	private int numOfAreas;
-	private char bordersWith[];
+	private char namesOfAreas[];
 	private int crowd;
 	private int numInfected;
 	private int numImmune;
@@ -105,13 +105,13 @@ public class Area {
 		return this.name;
 	}
 
-	public char[] getBordersWith() {
-		return this.bordersWith;
+	public char[] getNamesOfAreas() {
+		return this.namesOfAreas;
 	}
 
 	public void readNumInfected() throws NegativeNumberException, InfectedLessThanOneException, OvercrowdedException {
 		// Reads the number of infected people
-		System.out.print("\nThe number of infected people " + "for area " + name + ": ");
+		System.out.print("\nThe number of people for area " + name + ": ");
 		String i = input.nextLine();
 		this.numInfected = Integer.parseInt(i);
 		if (this.numInfected < 0)
@@ -206,23 +206,23 @@ public class Area {
 			throw new ProbabilitiesOptionException("\nInsert a number that is either 0 or 1");
 
 		if (option == 1) {
-			System.out.print("\nWith how many areas do you want area " + this.name + " to border with?");
+			System.out.print("\nWith how many areas do you want area " + this.name + " to border with? ");
 			String nAreas = input.nextLine();
 			numOfAreas = Integer.parseInt(nAreas);
 			if (numOfAreas <= 0)
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
-			bordersWith = new char[numOfAreas];
+			namesOfAreas = new char[numOfAreas];
 			bordersForEachArea = new ArrayList[numOfAreas];
 			
 			for (int k = 0; k < numOfAreas; k++)
 				bordersForEachArea[k] = new ArrayList<Point>();
 
 			for (int k = 0; k < numOfAreas; k++) {
-				System.out.print("\nWith which area do you want area " + name + " to be bordered with");
-				bordersWith[k] = input.nextLine().charAt(0);
+				System.out.print("\nNo." + k+1 + " area you want area " + name + " to be bordered with: ");
+				namesOfAreas[k] = input.nextLine().charAt(0);
 
-				System.out.println("\nHow many borders do you want for the area?");
+				System.out.println("\nHow many borders do you want for the area " + namesOfAreas[k] + "? ");
 				String b = input.nextLine();
 				int nBorders = Integer.parseInt(b);
 				if (nBorders <= 0)
@@ -233,11 +233,11 @@ public class Area {
 				numBorders = nBorders;
 
 				System.out.println("\nGive the area on the grid for the borders in points(e.g 2,0)"
-						+ "\n(The points should be on the border of the grid, successively and you should give them in order!");
+						+ "\n(The points should be on the border of the grid, successively and you should give them in order!\n");
 
 				Point[] borders = new Point[numBorders];
 				for (int i = 0; i < numBorders; i++) {
-					System.out.println(i + 1 + ") ");
+					System.out.print(i + 1 + ": ");
 					String coordinates = input.nextLine();
 					borders[i] = Input(coordinates);
 					if (borders[i].getX() == -1 || borders[i].getY() == -1)
