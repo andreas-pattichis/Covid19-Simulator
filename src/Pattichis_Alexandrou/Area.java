@@ -111,7 +111,7 @@ public class Area {
 
 	public void readNumInfected() throws NegativeNumberException, InfectedLessThanOneException, OvercrowdedException {
 		// Reads the number of infected people
-		System.out.print("\nThe number of people for area " + name + ": ");
+		System.out.print("\nThe number of infected people for area " + name + ": ");
 		String i = input.nextLine();
 		this.numInfected = Integer.parseInt(i);
 		if (this.numInfected < 0)
@@ -128,7 +128,7 @@ public class Area {
 
 	public void readNumImmune() throws NegativeNumberException, OvercrowdedException {
 		// Reads the number of immune people
-		System.out.print("\nThe number of immune people " + "for area " + name + ": ");
+		System.out.print("\nThe number of immune people for area " + name + ": ");
 		String i = input.nextLine();
 		this.numImmune = Integer.parseInt(i);
 
