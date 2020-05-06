@@ -326,8 +326,7 @@ public class Area {
 			Thread.currentThread().interrupt();
 		}
 	}
-	ArrayList<Person> movePl = new ArrayList<Person>();
-	ArrayList<Person> movePl2 = new ArrayList<Person>();
+	
 	public void drawInitialArea() {
 
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
@@ -335,15 +334,15 @@ public class Area {
 		a.createGrid(max); // Draws the grid
 		DrawBorders();
 		a.createGrid(max);
-		movePl=x.setPeople(pl); // Draws the people
-		for (int i = 0; i < movePl.size(); i++) {
+		pl=x.setPeople(pl); // Draws the people
+		for (int i = 0; i < pl.size(); i++) {
 			if (numBorders > 0 /*&& peopleVirus!=-1*/) {
 				for (int j = 0; j < numBorders; j++) {
 					//System.out.println("i:"+i+" "+"j:"+j);
-					if (movePl.get(i).getCoordinates().getX() == borders[j].getX()
-							&& movePl.get(i).getCoordinates().getY() == borders[j].getY()) {
-						if(x.move2(movePl.get(i))==false) {
-						movePl.remove(i);
+					if (pl.get(i).getCoordinates().getX() == borders[j].getX()
+							&& pl.get(i).getCoordinates().getY() == borders[j].getY()) {
+						if(x.move2(pl.get(i))==false) {
+						pl.remove(i);
 						x.crowd--;
 						places.crowd--;}
 					
@@ -392,25 +391,25 @@ public class Area {
 		// else
 		// places.placeAffectsPeople(x.getPeople(), -1, -1);
 		// if (numBorders != 0)
-		movePl = x.move(max, peopleVirus, peopleMask);
+		pl = x.move(max, peopleVirus, peopleMask);
 		DrawBorders();
 		places.PrintInfection();
 
 		a.createGrid(max); // Draws the grid again
-		for (int i = 0; i < movePl.size(); i++) {
-			movePl.get(i).drawPerson();
+		for (int i = 0; i < pl.size(); i++) {
+			pl.get(i).drawPerson();
 		}
-		for (int i = 0; i < movePl.size(); i++) {
+		for (int i = 0; i < pl.size(); i++) {
 			if (numBorders > 0 /*&& peopleVirus!=-1*/) {
 				for (int j = 0; j < numBorders; j++) {
-					if(!movePl.isEmpty()) {
-					if (movePl.get(i).getCoordinates().getX() == borders[j].getX()
-							&& movePl.get(i).getCoordinates().getY() == borders[j].getY()) {
+					if(!pl.isEmpty()) {
+					if (pl.get(i).getCoordinates().getX() == borders[j].getX()
+							&& pl.get(i).getCoordinates().getY() == borders[j].getY()) {
 
 						//transportedPeople.add(movePl.get(i));
 						
-						if(x.move2(movePl.get(i))==false) {
-							movePl.remove(i);
+						if(x.move2(pl.get(i))==false) {
+							pl.remove(i);
 							x.crowd--;
 							places.crowd--;
 							if(i>0)
@@ -439,20 +438,20 @@ public class Area {
 
 	public void printFinalStaticsforArea() {
 
-		ArrayList ppl = new ArrayList();
+		//ArrayList pl = new ArrayList();
 		int finalSumInfected = 0;
 		int finalSumHealthy = 0;
 		int finalSumImmune = 0;
 
-		ppl = x.getPeople();
+		pl = x.getPeople();
 
 		for (int i = 0; i < x.getCrowd(); i++) {
 
-			if (((Person) ppl.get(i)).isImmune())
+			if (((Person) pl.get(i)).isImmune())
 				finalSumImmune++;
-			else if (((Person) ppl.get(i)).isInfected())
+			else if (((Person) pl.get(i)).isInfected())
 				finalSumInfected++;
-			else if (!((Person) ppl.get(i)).isInfected() && !((Person) ppl.get(i)).isImmune())
+			else if (!((Person) pl.get(i)).isInfected() && !((Person) pl.get(i)).isImmune())
 				finalSumHealthy++;
 
 		}
