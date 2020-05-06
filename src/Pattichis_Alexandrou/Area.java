@@ -214,15 +214,15 @@ public class Area {
 
 			namesOfAreas = new char[numOfAreas];
 			bordersForEachArea = new ArrayList[numOfAreas];
-			
+
 			for (int k = 0; k < numOfAreas; k++)
 				bordersForEachArea[k] = new ArrayList<Point>();
 
 			for (int k = 0; k < numOfAreas; k++) {
-				System.out.print("\nNo." + k+1 + " area you want area " + name + " to be bordered with: ");
+				System.out.print("\nNo." + k + 1 + " area you want area " + name + " to be bordered with: ");
 				namesOfAreas[k] = input.nextLine().charAt(0);
 
-				System.out.println("\nHow many borders do you want for the area " + namesOfAreas[k] + "? ");
+				System.out.print("\nHow many borders do you want for the area " + namesOfAreas[k] + "? ");
 				String b = input.nextLine();
 				int nBorders = Integer.parseInt(b);
 				if (nBorders <= 0)
@@ -267,11 +267,8 @@ public class Area {
 
 				}
 
-				for (int i = 0; i < numBorders; i++) {
-					
+				for (int i = 0; i < numBorders; i++)
 					bordersForEachArea[k].add(new Point(borders[i]));
-					System.out.println(bordersForEachArea[k].get(i).getY());}
-
 			}
 		}
 
@@ -284,9 +281,13 @@ public class Area {
 		for (int k = 0; k < numOfAreas; k++)
 			for (int i = 0; i < bordersForEachArea[k].size(); i++) {
 				Point check = new Point(bordersForEachArea[k].get(i));
-				System.out.println(i);
+				//System.out.println(i);
+				StdDraw.setPenColor(StdDraw.BLACK);
+				StdDraw.circle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
 				StdDraw.setPenColor(StdDraw.PINK);
-				StdDraw.filledSquare(check.getX() + 0.5, check.getY() + 0.5, 0.5);
+				StdDraw.filledCircle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
+				// StdDraw.filledSquare(check.getX() + 0.5, check.getY() + 0.5, 0.5);
+
 			}
 	}
 
@@ -327,7 +328,6 @@ public class Area {
 	}
 
 	public void setPlaces(int duration) {
-
 		places = new PlaceInfected(this.height, this.width, this.crowd, duration, x.getPeople());
 	}
 
@@ -344,7 +344,6 @@ public class Area {
 	}
 
 	public void drawInitialArea() {
-
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 		int max = Math.max(this.width, this.height);
 		a.createGrid(max); // Draws the grid
@@ -352,9 +351,9 @@ public class Area {
 		a.createGrid(max);
 
 		pl = x.setPeople(pl); // Draws the people
-		for (int i = 0; i < pl.size(); i++) {
+		for (int i = 0; i < pl.size(); i++)
 			if (numBorders > 0) {
-				for (int k = 0; k < numOfAreas; k++) {
+				for (int k = 0; k < numOfAreas; k++)
 					for (int j = 0; j < numBorders; j++) {
 						Point check = new Point(bordersForEachArea[k].get(j));
 						if (pl.get(i).getCoordinates().getX() == check.getX()
@@ -364,12 +363,9 @@ public class Area {
 								x.crowd--;
 								places.crowd--;
 							}
-
 						}
 					}
-				}
 			}
-		}
 
 		// Draws the grid again
 
@@ -387,11 +383,9 @@ public class Area {
 		if (this.numImmune > 1 || this.numImmune == 0)
 			System.out.println(this.numImmune + " people that are immune.\n");
 		if (this.numImmune == 1)
-			System.out.println(this.numImmune + " person that is immune.\n\\n");
+			System.out.println(this.numImmune + " person that is immune.\n");
 
 	}
-
-	int k = 0;
 
 	public ArrayList<Person> drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
 		ArrayList<Person> transportedPeople = new ArrayList<Person>();
@@ -400,7 +394,7 @@ public class Area {
 		StdDraw.enableDoubleBuffering();
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 
-		System.out.println(pl.size());
+		System.out.println("\n" + pl.size() + "\n");
 		places.setDuration(x.getPeople(), crowd);
 
 		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
@@ -409,9 +403,9 @@ public class Area {
 		places.PrintInfection();
 
 		a.createGrid(max); // Draws the grid again
-		for (int i = 0; i < pl.size(); i++) {
+		for (int i = 0; i < pl.size(); i++) 
 			pl.get(i).drawPerson();
-		}
+		
 		for (int i = 0; i < pl.size(); i++) {
 			if (numBorders > 0) {
 				for (int k = 0; k < numOfAreas; k++) {
@@ -431,7 +425,6 @@ public class Area {
 							}
 						}
 					}
-
 				}
 			}
 		}
@@ -439,7 +432,6 @@ public class Area {
 		delay();
 		StdDraw.show();
 		StdDraw.pause(6);
-		k++;
 
 		if (numBorders > 0)
 			return transportedPeople;
@@ -456,14 +448,12 @@ public class Area {
 		pl = x.getPeople();
 
 		for (int i = 0; i < x.getCrowd(); i++) {
-
 			if (((Person) pl.get(i)).isImmune())
 				finalSumImmune++;
 			else if (((Person) pl.get(i)).isInfected())
 				finalSumInfected++;
 			else if (!((Person) pl.get(i)).isInfected() && !((Person) pl.get(i)).isImmune())
 				finalSumHealthy++;
-
 		}
 
 		System.out.println("---------------------------------------------------------------");
@@ -482,7 +472,7 @@ public class Area {
 		if (finalSumImmune == 1)
 			System.out.println(finalSumImmune + " person that is immune.\n");
 		if (finalSumInfected - this.numInfected >= 2)
-			System.out.println("As you can see, with these results is important to STAY HOME!!\n\\n");
+			System.out.println("As you can see, with these results is important to STAY HOME!!\n");
 	}
 
 }
