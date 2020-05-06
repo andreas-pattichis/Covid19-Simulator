@@ -10,7 +10,7 @@ import edu.princeton.cs.introcs.StdDraw;
 public class Area {
 	private char name;
 	private int numOfAreas;
-	private char namesOfAreas[];
+	private char namesThatBorderWith[];
 	private int crowd;
 	private int numInfected;
 	private int numImmune;
@@ -106,7 +106,7 @@ public class Area {
 	}
 
 	public char[] getNamesOfAreas() {
-		return this.namesOfAreas;
+		return this.namesThatBorderWith;
 	}
 
 	public void readNumInfected() throws NegativeNumberException, InfectedLessThanOneException, OvercrowdedException {
@@ -212,7 +212,7 @@ public class Area {
 			if (numOfAreas <= 0)
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
-			namesOfAreas = new char[numOfAreas];
+			namesThatBorderWith = new char[numOfAreas];
 			bordersForEachArea = new ArrayList[numOfAreas];
 
 			for (int k = 0; k < numOfAreas; k++)
@@ -220,9 +220,9 @@ public class Area {
 
 			for (int k = 0; k < numOfAreas; k++) {
 				System.out.print("\nNo." + k + 1 + " area you want area " + name + " to be bordered with: ");
-				namesOfAreas[k] = input.nextLine().charAt(0);
+				namesThatBorderWith[k] = input.nextLine().charAt(0);
 
-				System.out.print("\nHow many borders do you want for the area " + namesOfAreas[k] + "? ");
+				System.out.print("\nHow many borders do you want for the area " + namesThatBorderWith[k] + "? ");
 				String b = input.nextLine();
 				int nBorders = Integer.parseInt(b);
 				if (nBorders <= 0)
@@ -281,7 +281,7 @@ public class Area {
 		for (int k = 0; k < numOfAreas; k++)
 			for (int i = 0; i < bordersForEachArea[k].size(); i++) {
 				Point check = new Point(bordersForEachArea[k].get(i));
-				//System.out.println(i);
+				// System.out.println(i);
 				StdDraw.setPenColor(StdDraw.BLACK);
 				StdDraw.circle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
 				StdDraw.setPenColor(StdDraw.PINK);
@@ -387,8 +387,22 @@ public class Area {
 
 	}
 
-	public ArrayList<Person> drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
-		ArrayList<Person> transportedPeople = new ArrayList<Person>();
+	
+	private ArrayList<Character>[] namesOfTheBorders;
+	
+	private void setNamesOfTheBorders(ArrayList<Character>[] c) {
+		namesOfTheBorders = c;
+	}
+	
+	public ArrayList<Character>[] getNamesOfTheBorders() {
+		return namesOfTheBorders;
+	}
+	
+	public ArrayList<Person>[] drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
+		
+		ArrayList<Person>[] transportedPeople = new ArrayList[this.numOfAreas];
+		for (int k = 0; k < numOfAreas; k++)
+			transportedPeople[k] = new ArrayList<Person>();
 
 		int max = Math.max(this.width, this.height);
 		StdDraw.enableDoubleBuffering();
@@ -403,8 +417,12 @@ public class Area {
 		places.PrintInfection();
 
 		a.createGrid(max); // Draws the grid again
-		for (int i = 0; i < pl.size(); i++) 
+		for (int i = 0; i < pl.size(); i++)
 			pl.get(i).drawPerson();
+
+		ArrayList<Character>[] namesOfTheBorders = new ArrayList[this.numOfAreas];
+		for (int k = 0; k < numOfAreas; k++)
+			namesOfTheBorders[k] = new ArrayList<Character>();
 		
 		for (int i = 0; i < pl.size(); i++) {
 			if (numBorders > 0) {
@@ -414,8 +432,9 @@ public class Area {
 							Point check = new Point(bordersForEachArea[k].get(j));
 							if (pl.get(i).getCoordinates().getX() == check.getX()
 									&& pl.get(i).getCoordinates().getY() == check.getY()) {
-
 								if (x.move2(pl.get(i)) == false) {
+									transportedPeople[k].add(pl.get(i));
+									namesOfTheBorders[k].add(namesThatBorderWith[k]);
 									pl.remove(i);
 									x.crowd--;
 									places.crowd--;
@@ -433,12 +452,15 @@ public class Area {
 		StdDraw.show();
 		StdDraw.pause(6);
 
-		if (numBorders > 0)
-			return transportedPeople;
-
-		return null;
+		setNamesOfTheBorders(namesOfTheBorders);
+		return transportedPeople;
 	}
 
+	public void addPersonToArea(Person p) {
+		x.addPerson(p);
+		places.crowd--;
+	}
+	
 	public void printFinalStaticsforArea() {
 
 		int finalSumInfected = 0;
