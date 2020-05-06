@@ -177,12 +177,7 @@ public class Simulation {
 
 					if (sumAreas > 1)
 						areas[i].setBorders();
-
 				}
-
-				// for (int j = 0; j < town.length; j++) {
-				// System.out.println(town[j] + " ");
-
 				// Reads the time of the program
 				System.out.print("\nGive the time of the program (in minutes): ");
 				time = input.nextLine();
