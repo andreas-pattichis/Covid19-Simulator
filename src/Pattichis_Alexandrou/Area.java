@@ -247,9 +247,9 @@ public class Area {
 						throw new ProbabilitiesOptionException(
 								"Give the points that are in the grid(form 0 to (height or width) -1)..\ne.g. Give a point like (2,1)!!");
 					if (!(borders[i].getX() <= this.height && borders[i].getY() == this.width
-							|| borders[i].getX() == this.height && borders[i].getY() <= this.width
-							|| borders[i].getX() == 0 && borders[i].getY() <= this.width
-							|| borders[i].getX() <= this.height && borders[i].getY() == 0))
+							|| borders[i].getX() == this.height-1 && borders[i].getY() <= this.width-1
+							|| borders[i].getX() == 0 && borders[i].getY() <= this.width-1
+							|| borders[i].getX() <= this.height-1 && borders[i].getY() == 0))
 						throw new ProbabilitiesOptionException(
 								"Give the points that are on the border of the grid..\ne.g. Give a point like (height,0)!!");
 					if (i != 0) {
@@ -278,17 +278,23 @@ public class Area {
 
 	public void DrawBorders() {
 
-		for (int k = 0; k < numOfAreas; k++)
+		for (int k = 0; k < numOfAreas; k++) {
 			for (int i = 0; i < bordersForEachArea[k].size(); i++) {
 				Point check = new Point(bordersForEachArea[k].get(i));
 				// System.out.println(i);
 				StdDraw.setPenColor(StdDraw.BLACK);
 				StdDraw.circle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
-				StdDraw.setPenColor(StdDraw.PINK);
+				if(k%2==0)
+					StdDraw.setPenColor(StdDraw.PINK);
+				else if(k%3==0)
+					StdDraw.setPenColor(StdDraw.WHITE);
+				else if(k%2==1)
+					StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
 				StdDraw.filledCircle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
 				// StdDraw.filledSquare(check.getX() + 0.5, check.getY() + 0.5, 0.5);
 
 			}
+		}
 	}
 
 	public int getNumBorders() {
