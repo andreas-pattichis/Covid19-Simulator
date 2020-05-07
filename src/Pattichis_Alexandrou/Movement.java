@@ -168,12 +168,13 @@ public class Movement extends Grid {
 	}
 
 	public void addPerson(Person p) {
+		
 		Point nCoordinate = new Point(0, 0);
 		if (crowd < super.height * super.width) {
 			boolean moved = false;
 			while (!moved) {
-				nCoordinate = new Point((int) Math.random() * super.height, (int) Math.random() * super.height);
-
+				nCoordinate = new Point((int) (Math.random() * super.height), (int) (Math.random() * super.height));
+				System.out.println(nCoordinate.getX()+" "+nCoordinate.getY());
 				if (checkEmpty(nCoordinate) && withinMargins(nCoordinate)) {
 					moved = true;
 					p.updateCoordinates(nCoordinate);
