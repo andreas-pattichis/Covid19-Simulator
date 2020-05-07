@@ -28,3 +28,9 @@ supposed to move to this area after he entered the appropriate border, will not 
 11. The same boorder (coordinates) cannot lead to two or more different areas.
 
 12. User can only enter the coordinates in this form: x,y
+
+13. Borders have a maximum amount that cannot surpass.
+
+14. An area cannot border with itself.
+
+15. All the borders can only be on the edges.
