@@ -197,7 +197,7 @@ public class Area {
 		}
 	}
 
-	public void setBorders() throws ProbabilitiesOptionException {
+	public void setBorders(int sum) throws ProbabilitiesOptionException {
 		System.out.print("\nDo you want area " + " to have borders?\nPress 0 for NO or 1 for YES:");
 		String o = input.nextLine();
 		int option = Integer.parseInt(o);
@@ -209,7 +209,7 @@ public class Area {
 			System.out.print("\nWith how many areas do you want area " + this.name + " to border with? ");
 			String nAreas = input.nextLine();
 			numOfAreas = Integer.parseInt(nAreas);
-			if (numOfAreas <= 0)
+			if (numOfAreas <= 0||numOfAreas>=sum)
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
 			namesThatBorderWith = new char[numOfAreas];
@@ -221,7 +221,12 @@ public class Area {
 			for (int k = 0; k < numOfAreas; k++) {
 				System.out.print("\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with: ");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
-
+				
+				 if ( namesThatBorderWith[k] - 65 > numOfAreas  ||
+				 namesThatBorderWith[k] - 65 < 0
+				 || namesThatBorderWith[k] - 65 > 91 - 65 )
+				 throw new ProbabilitiesOptionException("Give the name of the area that existe.g 'A' ");
+				
 				System.out.print("\nHow many borders do you want for the area " + namesThatBorderWith[k] + "? ");
 				String b = input.nextLine();
 				int nBorders = Integer.parseInt(b);
