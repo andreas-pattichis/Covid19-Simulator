@@ -416,9 +416,9 @@ public class Area {
 
 		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
 		pl = x.move(max, peopleVirus, peopleMask);
-		DrawBorders();
+	
 		places.PrintInfection();
-
+		DrawBorders();
 		a.createGrid(max); // Draws the grid again
 		for (int i = 0; i < pl.size(); i++)
 			pl.get(i).drawPerson();
