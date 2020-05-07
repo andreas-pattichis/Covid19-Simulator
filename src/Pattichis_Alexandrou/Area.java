@@ -213,13 +213,13 @@ public class Area {
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
 			namesThatBorderWith = new char[numOfAreas];
-		//	bordersForEachArea = new ArrayList[numOfAreas];
+			bordersForEachArea = new ArrayList[numOfAreas];
 
 			for (int k = 0; k < numOfAreas; k++)
 				bordersForEachArea[k] = new ArrayList<Point>();
 
 			for (int k = 0; k < numOfAreas; k++) {
-				System.out.print("\nNo." + k + 1 + " area you want area " + name + " to be bordered with: ");
+				System.out.print("\nNo." + (int)(k+1) + " area you want area " + name + " to be bordered with: ");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
 
 				System.out.print("\nHow many borders do you want for the area " + namesThatBorderWith[k] + "? ");
