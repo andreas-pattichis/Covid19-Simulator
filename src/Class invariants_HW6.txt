@@ -1,0 +1,30 @@
+Andreas Pattichis (apatti01)
+Andreas Alexandrou (aalexa02)
+
+Class Invariants
+-----------------------
+1. Every field has to be an integer with a positive value.
+
+2. There always has to be a person that is infected.
+
+3. The probability for a person to get infected is always lower if he/she wears a mask.
+
+4. The probabilities that are given by the user have to always be between 0 and 100.
+
+5. The number of the people in the simulation must always be the sum of healthy, infected and immune people.
+
+6. The number of the people in the simulation must not exceed the product of height and width of the grid.
+
+7. For the purpose of this simulation, height and width have to be always below 50, so that the simulation 
+   is ran with  a good flow and doesen't take took long to be drawn each time people move.
+
+8. Two people cannot be placed in the same place at the same time.
+
+9. Immune people cannot get infected or transmit the virus.
+
+10. If the area has reached it's maximum capacity(crowd >= height * width) of people, the person that was 
+supposed to move to this area after he entered the appropriate border, will not move because then the area will become overcrowded.
+
+11. The same boorder (coordinates) cannot lead to two or more different areas.
+
+12. User can only enter the coordinates in this form: x,y
