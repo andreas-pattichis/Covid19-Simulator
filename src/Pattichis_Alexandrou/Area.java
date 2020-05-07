@@ -213,7 +213,7 @@ public class Area {
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
 			namesThatBorderWith = new char[numOfAreas];
-			bordersForEachArea = new ArrayList[numOfAreas];
+		//	bordersForEachArea = new ArrayList[numOfAreas];
 
 			for (int k = 0; k < numOfAreas; k++)
 				bordersForEachArea[k] = new ArrayList<Point>();
@@ -243,9 +243,9 @@ public class Area {
 					if (borders[i].getX() == -1 || borders[i].getY() == -1)
 						throw new ProbabilitiesOptionException(
 								"Give the points correctly..\ne.g. Give a point like (2,1)!!");
-					if (borders[i].getX() > this.height || borders[i].getY() > this.width)
+					if (borders[i].getX() > this.height-1 || borders[i].getY() > this.width-1)
 						throw new ProbabilitiesOptionException(
-								"Give the points that are in the grid..\ne.g. Give a point like (2,1)!!");
+								"Give the points that are in the grid(form 0 to (height or width) -1)..\ne.g. Give a point like (2,1)!!");
 					if (!(borders[i].getX() <= this.height && borders[i].getY() == this.width
 							|| borders[i].getX() == this.height && borders[i].getY() <= this.width
 							|| borders[i].getX() == 0 && borders[i].getY() <= this.width
