@@ -457,6 +457,7 @@ public class Area {
 		delay();
 		StdDraw.show();
 		StdDraw.pause(6);
+		System.out.println("drawEachStep()");
 
 		setNamesOfTheBorders(namesOfTheBorders);
 		return transportedPeople;

@@ -168,21 +168,22 @@ public class Movement extends Grid {
 	}
 
 	public void addPerson(Person p) {
-		Point nCoordinate = new Point(0,0);
-		boolean moved = false;
-		while (!moved) {
-			nCoordinate = new Point((int)Math.random()*super.height,
-					(int)Math.random()*super.height);
+		Point nCoordinate = new Point(0, 0);
+		if (crowd < super.height * super.width) {
+			boolean moved = false;
+			while (!moved) {
+				nCoordinate = new Point((int) Math.random() * super.height, (int) Math.random() * super.height);
 
-			if (checkEmpty(nCoordinate) && withinMargins(nCoordinate)) {
-				moved = true;
-				p.updateCoordinates(nCoordinate);
+				if (checkEmpty(nCoordinate) && withinMargins(nCoordinate)) {
+					moved = true;
+					p.updateCoordinates(nCoordinate);
+				}
 			}
+			ppl.add(p);
+			crowd++;
 		}
-		ppl.add(p);
-		crowd++;
 	}
-	
+
 	/**
 	 * move() method takes one input as a parameter: max. It used everytime we want
 	 * to move people that are used during the simulation for one time
