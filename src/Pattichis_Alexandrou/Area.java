@@ -357,7 +357,7 @@ public class Area {
 		a.createGrid(max);
 
 		pl = x.setPeople(pl); // Draws the people
-		for (int i = 0; i < pl.size(); i++)
+	/*	for (int i = 0; i < pl.size(); i++)
 			if (numBorders > 0) {
 				for (int k = 0; k < numOfAreas; k++)
 					for (int j = 0; j < numBorders; j++) {
@@ -371,7 +371,7 @@ public class Area {
 							}
 						}
 					}
-			}
+			}*/
 
 		// Draws the grid again
 
