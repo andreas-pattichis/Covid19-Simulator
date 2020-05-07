@@ -1,6 +1,6 @@
 package Pattichis_Alexandrou;
 
-import java.util.ArrayList;
+import java.util.ArrayList; // Library that is used for Arralist
 
 import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the package
 
@@ -15,12 +15,11 @@ import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the
  */
 public class PlaceInfected extends Movement {
 	private int[][] duration; // Stores the duration that each of the places will be infected
-	ArrayList<Person> p; // A type Person array that stores all the information for the people
+	ArrayList<Person> p; // A type Person arraylist that stores all the information for the people
 	private int time; // The time that the simulation will be ran
-	private int beginPl;
 
 	/**
-	 * PlaceInfected constructor that takes four integers and one Person[] as
+	 * PlaceInfected constructor that takes four integers and one ArrayList<Person> as
 	 * inputs:h,w,c,t,p. It calls the super constructor for h,w and c super(h,w,c).
 	 * It also creates an int array for duration(height = h, width = w) that is
 	 * initialized to 0.
@@ -33,7 +32,7 @@ public class PlaceInfected extends Movement {
 	 * 
 	 * @param t Represents the time that the simulation will be ran
 	 * 
-	 * @param p Represents a type Person array that stores all the information for
+	 * @param p Represents a type Person arraylist that stores all the information for
 	 *          the people
 	 */
 	public PlaceInfected(int h, int w, int c, int t, ArrayList<Person> p) {
@@ -54,7 +53,7 @@ public class PlaceInfected extends Movement {
 	 * sets the duration by checking if each of theses persons are infected and not
 	 * wearing mask for protection.
 	 * 
-	 * @param ppl A type Person array that stores all the information for the people
+	 * @param ppl A type Person arraylist that stores all the information for the people
 	 */
 	public void setDuration(ArrayList<Person> ppl, int c) {
 		for (int i = 0; i < crowd; i++) {

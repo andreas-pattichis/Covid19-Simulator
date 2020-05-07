@@ -1,8 +1,8 @@
 package Pattichis_Alexandrou;
 
 /**
- * InfectedLessThanOneException is an exception that is thrown when the user enters a
- * value for the infected people that is less than 1.
+ * InfectedLessThanOneException is an exception that is thrown when the user
+ * enters a value for the infected people that is less than 1.
  * 
  * @author apatti01
  * @author aalexa02

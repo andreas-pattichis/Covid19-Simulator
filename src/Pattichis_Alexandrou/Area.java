@@ -8,25 +8,32 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Area {
-	private char name;
-	private int numOfAreas;
-	private char namesThatBorderWith[];
-	private int crowd;
-	private int numInfected;
-	private int numImmune;
-	private int numHealthy;
-	private int height;
-	private int width;
-	private int numBorders;
-	private ArrayList<Point>[] bordersForEachArea = new ArrayList[1];
-	private Person[] people = null;
-	private ArrayList<Person> pl = new ArrayList<Person>();
-	private Grid a;
-	private Movement x;
-	private PlaceInfected places;
+	private char name; // Name of the area
+	private int numOfAreas; // Number of areas that the area borders with
+	private char namesThatBorderWith[]; // Names of the areas that the area borders with
+	private ArrayList<Point>[] bordersForEachArea = new ArrayList[1]; // A Point type arraylist that stores all the
+	private Person[] people = null; // Array of people that are placed in this area
+	private ArrayList<Person> pl = new ArrayList<Person>(); // A Person type arraylist with all the people that are used
+	private int crowd; // Number of people that are placed in every area
+	private int numInfected; // Number of people that are infected
+	private int numImmune; // Number of people that are immune
+	private int numHealthy; // Number of people that healthy
+	private int height; // Height of the area
+	private int width; // Width of the area
+	private int numBorders; // Number of borders that has each area
+	private Grid a; // A type Grid variable that is used for movement and placement
+	private Movement x; // A type Movement variable that is used for movement
+	private PlaceInfected places; // A type PlaceInfected variable that is used for places that are infected
 
 	Scanner input = new Scanner(System.in); // Using Scanner to read from the console
 
+	/**
+	 * Input() method is used to transform a string into a Point
+	 * 
+	 * @param s String that will be transformed to a Point type variable
+	 * 
+	 * @return a Point type variable
+	 */
 	public static Point Input(String s) {
 		String str = "";
 		Point x = new Point(0, 0);
@@ -76,8 +83,15 @@ public class Area {
 		return x;
 	}
 
-	public Area(char n) {
-		name = n;
+	/**
+	 * Area constructor that takes one character as input: c. It initializes all the
+	 * variables that have to be initialized and assigns the name of area to the
+	 * this.name.
+	 * 
+	 * @param c Indicates the name of the Area
+	 */
+	public Area(char c) {
+		name = c;
 		crowd = 0;
 		numInfected = 0;
 		numImmune = 0;
@@ -87,8 +101,12 @@ public class Area {
 		numBorders = 0;
 	}
 
+	/**
+	 * readCrowd() method reads the number of people of the area.
+	 * 
+	 * @throws NegativeNumberException
+	 */
 	public void readCrowd() throws NegativeNumberException {
-		// Reads the number of people
 		System.out.print("\nThe number of people " + "for area " + name + ": ");
 		String c = input.nextLine();
 		this.crowd = Integer.parseInt(c);
@@ -97,20 +115,25 @@ public class Area {
 			throw new NegativeNumberException();
 	}
 
+	/**
+	 * Getter method for this.crowd
+	 * 
+	 * @return this.crowd
+	 */
 	public int getCrowd() {
-		return crowd;
+		return this.crowd;
 	}
 
-	public char getName() {
-		return this.name;
-	}
-
-	public char[] getNamesOfAreas() {
-		return this.namesThatBorderWith;
-	}
-
+	/**
+	 * readNumInfected() method reads the number of infected people.
+	 * 
+	 * @throws NegativeNumberException
+	 * 
+	 * @throws InfectedLessThanOneException
+	 * 
+	 * @throws OvercrowdedException
+	 */
 	public void readNumInfected() throws NegativeNumberException, InfectedLessThanOneException, OvercrowdedException {
-		// Reads the number of infected people
 		System.out.print("\nThe number of infected people for area " + name + ": ");
 		String i = input.nextLine();
 		this.numInfected = Integer.parseInt(i);
@@ -122,10 +145,22 @@ public class Area {
 			throw new OvercrowdedException("\nThe number of infected is bigger than the crowd.\nTry again!!");
 	}
 
+	/**
+	 * Getter method for this.numInfected
+	 * 
+	 * @return this.numInfected
+	 */
 	public int getNumInfected() {
-		return numInfected;
+		return this.numInfected;
 	}
 
+	/**
+	 * readNumImmune() method reads the number of immune people.
+	 * 
+	 * @throws NegativeNumberException
+	 * 
+	 * @throws OvercrowdedException
+	 */
 	public void readNumImmune() throws NegativeNumberException, OvercrowdedException {
 		// Reads the number of immune people
 		System.out.print("\nThe number of immune people for area " + name + ": ");
@@ -140,18 +175,39 @@ public class Area {
 					"\nThe number of Immune + the infected is bigger than the crowd. \nTry again!!");
 	}
 
+	/**
+	 * Getter method for this.numImmune
+	 * 
+	 * @return this.numImmune
+	 */
 	public int getNumImmune() {
-		return numImmune;
+		return this.numImmune;
 	}
 
+	/**
+	 * readNumHealthy() method reads the number of health people.
+	 * 
+	 */
 	public void readNumHealthy() {
 		this.numHealthy = this.crowd - (this.numInfected + this.numImmune);
 	}
 
+	/**
+	 * Getter method for this.numHealthy
+	 * 
+	 * @return this.numHealthy
+	 */
 	public int getNumHealthy() {
-		return numHealthy;
+		return this.numHealthy;
 	}
 
+	/**
+	 * readHeight() method reads the height of the area.
+	 * 
+	 * @throws NegativeNumberException
+	 * 
+	 * @throws GridSizeException
+	 */
 	public void readHeight() throws NegativeNumberException, GridSizeException {
 		// Reads the height of the grid
 		System.out.print("\nThe height " + "for area " + name + ": ");
@@ -163,10 +219,22 @@ public class Area {
 			throw new GridSizeException();
 	}
 
+	/**
+	 * Getter method for this.height
+	 * 
+	 * @return this.height
+	 */
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
+	/**
+	 * readWidth() method reads the height of the area.
+	 * 
+	 * @throws NegativeNumberException
+	 * 
+	 * @throws GridSizeException
+	 */
 	public void readWidth() throws NegativeNumberException, GridSizeException {
 		// Reads the width of the grid
 		System.out.print("\nThe width " + "for area " + name + ": ");
@@ -178,8 +246,31 @@ public class Area {
 			throw new GridSizeException();
 	}
 
+	/**
+	 * Getter method for this.width
+	 * 
+	 * @return this.width
+	 */
 	public int getWidth() {
-		return width;
+		return this.width;
+	}
+
+	/**
+	 * Getter method for this.name
+	 * 
+	 * @return this.name
+	 */
+	public char getName() {
+		return this.name;
+	}
+
+	/**
+	 * Getter method for this.namesThatBorderWith
+	 * 
+	 * @return this.namesThatBorderWith
+	 */
+	public char[] getNamesOfAreas() {
+		return this.namesThatBorderWith;
 	}
 
 	/**
@@ -197,6 +288,14 @@ public class Area {
 		}
 	}
 
+	/**
+	 * setBorders() method gets one int as an input: sum. It reads and sets all the
+	 * borders for the area.
+	 * 
+	 * @param sum
+	 * 
+	 * @throws ProbabilitiesOptionException
+	 */
 	public void setBorders(int sum) throws ProbabilitiesOptionException {
 		System.out.print("\nDo you want area " + " to have borders?\nPress 0 for NO or 1 for YES:");
 		String o = input.nextLine();
@@ -209,7 +308,7 @@ public class Area {
 			System.out.print("\nWith how many areas do you want area " + this.name + " to border with? ");
 			String nAreas = input.nextLine();
 			numOfAreas = Integer.parseInt(nAreas);
-			if (numOfAreas <= 0||numOfAreas>=sum)
+			if (numOfAreas <= 0 || numOfAreas >= sum)
 				throw new ProbabilitiesOptionException("\nThe number of areas should be 1 or more!");
 
 			namesThatBorderWith = new char[numOfAreas];
@@ -221,12 +320,11 @@ public class Area {
 			for (int k = 0; k < numOfAreas; k++) {
 				System.out.print("\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with: ");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
-				
-				 if ( namesThatBorderWith[k] - 65 > numOfAreas  ||
-				 namesThatBorderWith[k] - 65 < 0
-				 || namesThatBorderWith[k] - 65 > 91 - 65 )
-				 throw new ProbabilitiesOptionException("Give the name of the area that existe.g 'A' ");
-				
+
+				if (namesThatBorderWith[k] - 65 > numOfAreas || namesThatBorderWith[k] - 65 < 0
+						|| namesThatBorderWith[k] - 65 > 91 - 65)
+					throw new ProbabilitiesOptionException("Give the name of the area that existe.g 'A' ");
+
 				System.out.print("\nHow many borders do you want for the area " + namesThatBorderWith[k] + "? ");
 				String b = input.nextLine();
 				int nBorders = Integer.parseInt(b);
@@ -237,8 +335,7 @@ public class Area {
 							"\nInsert a number that is equal or less than the perimeter of the border!");
 				numBorders = nBorders;
 
-				System.out.println("\nGive the area on the grid for the borders in points(e.g 2,0)"
-						+ "\n(The points should be on the border of the grid, successively and you should give them in order!\n");
+				System.out.println("\nGive the borders in points(e.g 2,0): \n");
 
 				Point[] borders = new Point[numBorders];
 				for (int i = 0; i < numBorders; i++) {
@@ -280,18 +377,19 @@ public class Area {
 				for (int i = 0; i < numBorders; i++)
 					bordersForEachArea[k].add(new Point(borders[i]));
 			}
-		}
-
-		else
+		} else
 			numBorders = 0;
 	}
 
+	/**
+	 * DrawBorders() method is used to draw the borders if they exist ao that they
+	 * can appear in the simulation.
+	 */
 	public void DrawBorders() {
 
 		for (int k = 0; k < numOfAreas; k++) {
 			for (int i = 0; i < bordersForEachArea[k].size(); i++) {
 				Point check = new Point(bordersForEachArea[k].get(i));
-				// System.out.println(i);
 				StdDraw.setPenColor(StdDraw.BLACK);
 				StdDraw.circle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
 				if (k % 2 == 0)
@@ -301,20 +399,31 @@ public class Area {
 				else if (k % 2 == 1)
 					StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
 				StdDraw.filledCircle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
-				// StdDraw.filledSquare(check.getX() + 0.5, check.getY() + 0.5, 0.5);
-
 			}
 		}
 	}
 
+	/**
+	 * Getter method for this.numBorders
+	 * 
+	 * @return this.numBorders
+	 */
 	public int getNumBorders() {
-		return numBorders;
+		return this.numBorders;
 	}
 
+	/**
+	 * Getter method for this.bordersForEachArea
+	 * 
+	 * @return this.bordersForEachArea
+	 */
 	public ArrayList<Point>[] getBorders() {
-		return bordersForEachArea;
+		return this.bordersForEachArea;
 	}
 
+	/**
+	 * setPeople() method sets all the people and adds the to the arraylist pl.
+	 */
 	public void setPeople() {
 		this.people = new Person[this.crowd];
 
@@ -334,15 +443,24 @@ public class Area {
 
 	}
 
+	/**
+	 * setGrid() method initializes the grid.
+	 */
 	public void setGrid() {
 		a = new Grid(this.height, this.width); // Creates the grid
 	}
 
+	/**
+	 * setMovement() method initializes the movement.
+	 */
 	public void setMovement() {
 		x = new Movement(this.height, this.width, this.crowd); // x will be used for the people to be set and
 		// return x; // move through the grid
 	}
 
+	/**
+	 * setPlaces() method initializes the PlaceInfected.
+	 */
 	public void setPlaces(int duration) {
 		places = new PlaceInfected(this.height, this.width, this.crowd, duration, x.getPeople());
 	}
@@ -359,6 +477,10 @@ public class Area {
 		}
 	}
 
+	/**
+	 * drawInitialArea() places all the people, draws the initial grid and prints
+	 * the initial statistics for each area.
+	 */
 	public void drawInitialArea() {
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
 		int max = Math.max(this.width, this.height);
@@ -367,14 +489,6 @@ public class Area {
 		a.createGrid(max);
 
 		pl = x.setPeople(pl); // Draws the people
-		/*
-		 * for (int i = 0; i < pl.size(); i++) if (numBorders > 0) { for (int k = 0; k <
-		 * numOfAreas; k++) for (int j = 0; j < numBorders; j++) { Point check = new
-		 * Point(bordersForEachArea[k].get(j)); if (pl.get(i).getCoordinates().getX() ==
-		 * check.getX() && pl.get(i).getCoordinates().getY() == check.getY()) { if
-		 * (x.move2(pl.get(i)) == false) { pl.remove(i); x.crowd--; places.crowd--; } }
-		 * } }
-		 */
 
 		// Draws the grid again
 
@@ -402,10 +516,33 @@ public class Area {
 		namesOfTheBorders = c;
 	}
 
+	/**
+	 * getNamesOfTheBorders() returns a type character arraylist will all the names
+	 * of the areas that are bordered with this area.
+	 * 
+	 * @return a type character arraylist will all the names of the areas that are
+	 *         bordered with this area
+	 */
 	public ArrayList<Character>[] getNamesOfTheBorders() {
 		return namesOfTheBorders;
 	}
 
+	/**
+	 * drawEachStep() method makes all the appropriates calculations and makes all
+	 * the moves for each area every time they are called
+	 * 
+	 * @param peopleVirus Probabilities for the affection of the virus to the people
+	 * 
+	 * @param placeVirus  Probabilities for the affection of the virus to the places
+	 * 
+	 * @param peopleMask  Probabilities for the affection of the virus to the people
+	 *                    for people with mask
+	 * 
+	 * @param placeMask   Probabilities for the affection of the virus to the places
+	 *                    for people with mask
+	 * 
+	 * @return
+	 */
 	public ArrayList<Person>[] drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
 
 		ArrayList<Person>[] transportedPeople = new ArrayList[this.numOfAreas];
@@ -415,13 +552,13 @@ public class Area {
 		int max = Math.max(this.width, this.height);
 		StdDraw.enableDoubleBuffering();
 		StdDraw.clear(StdDraw.LIGHT_GRAY);
-
-		System.out.println("\n" + pl.size() + "\n");
 		places.setDuration(x.getPeople(), crowd);
 
 		places.placeAffectsPeople(x.getPeople(), placeVirus, placeMask);
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("Now in area " + this.name + ": ");
 		pl = x.move(max, peopleVirus, peopleMask);
-	
+
 		places.PrintInfection();
 		DrawBorders();
 		a.createGrid(max); // Draws the grid again
@@ -440,7 +577,7 @@ public class Area {
 							Point check = new Point(bordersForEachArea[k].get(j));
 							if (pl.get(i).getCoordinates().getX() == check.getX()
 									&& pl.get(i).getCoordinates().getY() == check.getY()) {
-								if (x.move2(pl.get(i)) == false) {
+								if (x.movePerson(pl.get(i)) == false) {
 									transportedPeople[k].add(pl.get(i));
 									namesOfTheBorders[k].add(namesThatBorderWith[k]);
 									pl.remove(i);
@@ -459,17 +596,26 @@ public class Area {
 		delay();
 		StdDraw.show();
 		StdDraw.pause(6);
-		System.out.println("drawEachStep()");
 
 		setNamesOfTheBorders(namesOfTheBorders);
 		return transportedPeople;
 	}
 
+	/**
+	 * addPersonToArea() method adds the Person p in the area by calling the method
+	 * addPerson of the variable x (x.addPerson(p));
+	 * 
+	 * @param p Person that will move to the new area
+	 */
 	public void addPersonToArea(Person p) {
 		x.addPerson(p);
 		places.crowd--;
 	}
 
+	/**
+	 * printFinalStaticsforArea() method prints all the final statistics for each
+	 * area.
+	 */
 	public void printFinalStaticsforArea() {
 
 		int finalSumInfected = 0;

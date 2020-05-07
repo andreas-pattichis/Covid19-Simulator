@@ -3,8 +3,8 @@ package Pattichis_Alexandrou;
 /**
  * GridSizeException is an exception that is thrown when the user enters either
  * a height or a width value for the board that is too big and it will take a
- * lot of time for the program to draw the simulation. So we ask for the user
- * to add a value that is below 50.
+ * lot of time for the program to draw the simulation. So we ask for the user to
+ * add a value that is below 50.
  * 
  * @author apatti01
  * @author aalexa02

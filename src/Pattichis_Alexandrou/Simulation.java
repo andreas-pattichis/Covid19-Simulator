@@ -61,12 +61,6 @@ public class Simulation {
 		int sumAreas = 0;
 		int sumBorders = 0;
 		Area[] areas = null;
-		// int userHeight = 0;
-		// int userWidth = 0;
-		// int userCrowd = 0;
-		// int sumInfected = 0;
-		// int sumHealthy = 0;
-		// int sumImmune = 0;
 
 		boolean done = true;
 
@@ -228,7 +222,7 @@ public class Simulation {
 			ArrayList<Person>[] allTransportedPeople = new ArrayList[sumAreas];
 			for (int k = 0; k < sumAreas; k++)
 				allTransportedPeople[k] = new ArrayList<Person>();
-			
+
 			ArrayList<Character>[] allNames = new ArrayList[sumAreas];
 			for (int k = 0; k < sumAreas; k++)
 				allNames[k] = new ArrayList<Character>();
