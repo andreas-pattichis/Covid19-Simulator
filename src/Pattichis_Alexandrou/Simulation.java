@@ -39,7 +39,6 @@ public class Simulation {
 		// The user enters manually the health of the people
 		String Infected;
 		String Immune;
-
 		String option; // The user is asked if he/she wants to add manually the probabilities of
 		String option1; // infection
 		String ppVirus; // Person-to-Person probability of infection without mask
@@ -79,7 +78,17 @@ public class Simulation {
 		System.out.println("                 && wearing a mask                           \n");
 		System.out.println("When floor is colored: 1) ORANGE, it just got infected         ");
 		System.out.println("                       2) YELLOW, it will stop being infected\n");
-		System.out.println("*Every person stays at the place for 1 minute.                ");
+		System.out.println("The borders are indicated with a circle.                       ");
+		System.out.println("The borders have 3 different colors depending on the area they ");
+		System.out.println("lead to:               1) PINK                                 ");
+		System.out.println("                       2) WHITE                                ");
+		System.out.println("                       3) LIGHT BLUE                           ");
+		System.out.println("\nRemember that borders can only be placed on the perimeter of the");
+		System.out.println("areas.");
+		System.out.println("*If there are more than 3 areas, different borders can have the ");
+		System.out.println("same colors.                                                 \n");
+		System.out.println("*Every person stays at the place for 1 minute.                 ");
+		System.out.println("*For each minute, the simulation shows the movement in each area.");
 
 		// While loop to read all the inputs, that stops whenever none of the exception
 		// are caught
@@ -140,9 +149,11 @@ public class Simulation {
 				sumAreas = Integer.parseInt(places);
 				if (sumAreas < 0)
 					throw new NegativeNumberException();
+				if (sumAreas > 26)
+					throw new NegativeNumberException("\nThe areas cannot be more than 26.\n");
 
 				areas = new Area[sumAreas];
-				
+
 				for (int i = 0; i < sumAreas; i++) {
 					areas[i] = new Area((char) ('A' + i));
 
@@ -230,9 +241,10 @@ public class Simulation {
 			for (int j = 0; j < sumAreas; j++) {
 				ArrayList<Person>[] transportedPeopleOfArea;
 				if (opt == 1)
-					transportedPeopleOfArea = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask,areas);
+					transportedPeopleOfArea = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask,
+							areas);
 				else
-					transportedPeopleOfArea = areas[j].drawEachStep(-1, -1, -1, -1,areas);
+					transportedPeopleOfArea = areas[j].drawEachStep(-1, -1, -1, -1, areas);
 
 				ArrayList<Character>[] namesOfTheBorders = areas[j].getNamesOfTheBorders();
 
@@ -248,7 +260,8 @@ public class Simulation {
 					for (int j = 0; j < sumAreas; j++) {
 						if (areas[j].getName() == allNames[k].get(z)) {
 							areas[j].addPersonToArea(allTransportedPeople[k].get(z));
-							areas[j].addCrowd();}
+							areas[j].addCrowd();
+						}
 					}
 				}
 		}

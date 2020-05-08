@@ -37,6 +37,7 @@ public class Area {
 	public void addCrowd() {
 		crowd++;
 	}
+
 	public static Point Input(String s) {
 		String str = "";
 		Point x = new Point(0, 0);
@@ -321,14 +322,16 @@ public class Area {
 				bordersForEachArea[k] = new ArrayList<Point>();
 
 			for (int k = 0; k < numOfAreas; k++) {
-				System.out.print("\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with: ");
+				System.out.print(
+						"\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with ('A' to 'Z'):");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
 
-				if (Math.abs(namesThatBorderWith[k]- 65)  > numOfAreas 
-						|| namesThatBorderWith[k] - 65 > 91 - 65||namesThatBorderWith[k]- 65==this.name-65) {
-					
-					System.out.println(Math.abs(namesThatBorderWith[k]- 65-k)==0);
-					throw new ProbabilitiesOptionException("Give the name of the area that exist e.g 'A' ");}
+				if (Math.abs(namesThatBorderWith[k] - 65) > numOfAreas || namesThatBorderWith[k] - 65 > 91 - 65
+						|| namesThatBorderWith[k] - 65 == this.name - 65) {
+
+					System.out.println(Math.abs(namesThatBorderWith[k] - 65 - k) == 0);
+					throw new ProbabilitiesOptionException("Give the name of the area that exist e.g 'A' ");
+				}
 
 				System.out.print("\nHow many borders do you want for the area " + namesThatBorderWith[k] + "? ");
 				String b = input.nextLine();
@@ -548,7 +551,8 @@ public class Area {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Person>[] drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask,Area areas[]) {
+	public ArrayList<Person>[] drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask,
+			Area areas[]) {
 
 		ArrayList<Person>[] transportedPeople = new ArrayList[this.numOfAreas];
 		for (int k = 0; k < numOfAreas; k++)
@@ -582,7 +586,9 @@ public class Area {
 							Point check = new Point(bordersForEachArea[k].get(j));
 							if (pl.get(i).getCoordinates().getX() == check.getX()
 									&& pl.get(i).getCoordinates().getY() == check.getY()) {
-								if (x.movePerson(pl.get(i)) == false&&areas[(int)(namesThatBorderWith[k]-65)].crowd!=areas[(int)(namesThatBorderWith[k]-65)].height*areas[(int)(namesThatBorderWith[k]-65)].width) {
+								if (x.movePerson(pl.get(i)) == false && areas[(int) (namesThatBorderWith[k]
+										- 65)].crowd != areas[(int) (namesThatBorderWith[k] - 65)].height
+												* areas[(int) (namesThatBorderWith[k] - 65)].width) {
 									transportedPeople[k].add(pl.get(i));
 									namesOfTheBorders[k].add(namesThatBorderWith[k]);
 									System.out.println("\nPerson has moved out of the area.");
