@@ -331,7 +331,7 @@ public class Area {
 						"\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with (only Characters):");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
 
-				if (Math.abs(namesThatBorderWith[k] - 65) >places || namesThatBorderWith[k] - 65 > 91 - 65
+				if (Math.abs(namesThatBorderWith[k] - 65) >places-1 || namesThatBorderWith[k] - 65 > 91 - 65
 						|| namesThatBorderWith[k] - 65 == this.name - 65) {
 
 					
