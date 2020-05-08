@@ -328,7 +328,7 @@ public class Area {
 
 			for (int k = 0; k < numOfAreas; k++) {
 				System.out.print(
-						"\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with ('A' to 'Z'):");
+						"\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with (only Characters):");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
 
 				if (Math.abs(namesThatBorderWith[k] - 65) > numOfAreas || namesThatBorderWith[k] - 65 > 91 - 65
