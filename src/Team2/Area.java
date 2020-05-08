@@ -1,4 +1,4 @@
-package Pattichis_Alexandrou;
+package Team2;
 
 import java.util.ArrayList;
 import java.util.Scanner;

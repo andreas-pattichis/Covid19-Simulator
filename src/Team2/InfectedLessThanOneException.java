@@ -1,4 +1,4 @@
-package Pattichis_Alexandrou;
+package Team2;
 
 /**
  * InfectedLessThanOneException is an exception that is thrown when the user

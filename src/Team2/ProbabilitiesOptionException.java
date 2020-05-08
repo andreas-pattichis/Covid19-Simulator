@@ -1,4 +1,4 @@
-package Pattichis_Alexandrou;
+package Team2;
 
 /**
  * class ProbabilitiesOptionException is used as an exception that is thrown to

@@ -1,4 +1,4 @@
-package Pattichis_Alexandrou;
+package Team2;
 
 import edu.princeton.cs.introcs.StdDraw; // Library to import the StdDraw to the package
 import java.awt.Color;

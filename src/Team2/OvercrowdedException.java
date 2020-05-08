@@ -1,4 +1,4 @@
-package Pattichis_Alexandrou;
+package Team2;
 
 /**
  * OvercrowdedException is an exception that is thrown when the user chooses to
