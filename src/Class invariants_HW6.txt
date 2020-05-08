@@ -23,8 +23,8 @@ Class Invariants
 9. Immune people cannot get infected or transmit the virus.
 
 10. If the area has reached it's maximum capacity(crowd >= height * width) of people, the person that was 
-supposed to move to this area after he entered the appropriate border, will not eventually move because then 
-the area will become overcrowded.
+    supposed to move to this area after he entered the appropriate border, will not eventually move because 
+    then the area will become overcrowded.
 
 11. The same boorder (coordinates) cannot lead to two or more different areas.
 
@@ -36,8 +36,11 @@ the area will become overcrowded.
 
 15. All the borders can only be on the edges.
 
-16. There is a limited amount of areas that can be used in the simulation, for the purspose of this simulation.
+16. Areas names are only charactes from 'A' to 'Z'.
 
-17. An area cannot border with more than the existing areas.
+17. There is a limited amount of areas that can be used in the simulation(<=26), as each area's name is a character.
+    So there cannot be more than 26 areas. 
 
-18. Areas names are only charactes from 'A' to 'Z'
+18. An area cannot border with more than the existing areas.
+
+19. Each succesive area border squares should be vertical or horizontal.
