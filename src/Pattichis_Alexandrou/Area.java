@@ -7,6 +7,11 @@ import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import edu.princeton.cs.introcs.StdDraw;
 
+/**
+ * Area class with all the details for each area
+ * @author apatti01
+ * @author aalexa02
+ */
 public class Area {
 	private char name; // Name of the area
 	private int numOfAreas; // Number of areas that the area borders with
