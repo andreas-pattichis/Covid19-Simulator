@@ -324,9 +324,11 @@ public class Area {
 				System.out.print("\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with: ");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
 
-				if (namesThatBorderWith[k] - 65 > numOfAreas || namesThatBorderWith[k] - 65 < 0
-						|| namesThatBorderWith[k] - 65 > 91 - 65||namesThatBorderWith[k] - 65-k==0)
-					throw new ProbabilitiesOptionException("Give the name of the area that existe.g 'A' ");
+				if (Math.abs(namesThatBorderWith[k]- 65)  > numOfAreas 
+						|| namesThatBorderWith[k] - 65 > 91 - 65||namesThatBorderWith[k]- 65==this.name-65) {
+					
+					System.out.println(Math.abs(namesThatBorderWith[k]- 65-k)==0);
+					throw new ProbabilitiesOptionException("Give the name of the area that exist e.g 'A' ");}
 
 				System.out.print("\nHow many borders do you want for the area " + namesThatBorderWith[k] + "? ");
 				String b = input.nextLine();
