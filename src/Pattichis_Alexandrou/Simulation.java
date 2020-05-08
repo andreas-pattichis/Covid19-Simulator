@@ -181,7 +181,7 @@ public class Simulation {
 						throw new OvercrowdedException();
 
 					if (sumAreas > 1)
-						areas[i].setBorders(sumAreas);
+						areas[i].setBorders(sumAreas,sumAreas);
 				}
 				// Reads the time of the program
 				System.out.print("\nGive the time of the program (in minutes): ");

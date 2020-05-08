@@ -305,7 +305,7 @@ public class Area {
 	 * 
 	 * @throws ProbabilitiesOptionException
 	 */
-	public void setBorders(int sum) throws ProbabilitiesOptionException {
+	public void setBorders(int sum,int places) throws ProbabilitiesOptionException {
 		System.out.print("\nDo you want area " + " to have borders?\nPress 0 for NO or 1 for YES:");
 		String o = input.nextLine();
 		int option = Integer.parseInt(o);
@@ -331,10 +331,10 @@ public class Area {
 						"\nNo." + (int) (k + 1) + " area you want area " + name + " to be bordered with (only Characters):");
 				namesThatBorderWith[k] = input.nextLine().charAt(0);
 
-				if (Math.abs(namesThatBorderWith[k] - 65) > numOfAreas || namesThatBorderWith[k] - 65 > 91 - 65
+				if (Math.abs(namesThatBorderWith[k] - 65) >places || namesThatBorderWith[k] - 65 > 91 - 65
 						|| namesThatBorderWith[k] - 65 == this.name - 65) {
 
-					System.out.println(Math.abs(namesThatBorderWith[k] - 65 - k) == 0);
+					
 					throw new ProbabilitiesOptionException("Give the name of the area that exist e.g 'A' ");
 				}
 
@@ -408,9 +408,10 @@ public class Area {
 				if (k % 2 == 0)
 					StdDraw.setPenColor(StdDraw.PINK);
 				else if (k % 3 == 0)
-					StdDraw.setPenColor(StdDraw.WHITE);
+					StdDraw.setPenColor(StdDraw.CYAN);
 				else if (k % 2 == 1)
 					StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
+				else StdDraw.setPenColor(StdDraw.CYAN);
 				StdDraw.filledCircle(check.getX() + 0.5, check.getY() + 0.5, 0.4);
 			}
 		}
