@@ -587,7 +587,7 @@ public class Area {
 		for (int i = 0; i < pl.size(); i++) {
 			if (numBorders > 0) {
 				for (int k = 0; k < numOfAreas; k++) {
-					for (int j = 0; j < numBorders; j++) {
+					for (int j = 0; j < bordersForEachArea[k].size(); j++) {
 						if (!pl.isEmpty()) {
 							Point check = new Point(bordersForEachArea[k].get(j));
 							if (pl.get(i).getCoordinates().getX() == check.getX()
