@@ -34,6 +34,9 @@ public class Area {
 	 * 
 	 * @return a Point type variable
 	 */
+	public void addCrowd() {
+		crowd++;
+	}
 	public static Point Input(String s) {
 		String str = "";
 		Point x = new Point(0, 0);
@@ -353,7 +356,7 @@ public class Area {
 							|| borders[i].getX() == 0 && borders[i].getY() <= this.width - 1
 							|| borders[i].getX() <= this.height - 1 && borders[i].getY() == 0))
 						throw new ProbabilitiesOptionException(
-								"Give the points that are on the border of the grid..\ne.g. Give a point like (height,0)!!");
+								"Give the points that are on the border of the grid..\ne.g. Give a point like (height-1,0)!!");
 					if (i != 0) {
 						if (!(borders[i].getX() == borders[i - 1].getX() + 1
 								&& borders[i].getY() == borders[i - 1].getY()
@@ -543,7 +546,7 @@ public class Area {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Person>[] drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask) {
+	public ArrayList<Person>[] drawEachStep(int peopleVirus, int placeVirus, int peopleMask, int placeMask,Area areas[]) {
 
 		ArrayList<Person>[] transportedPeople = new ArrayList[this.numOfAreas];
 		for (int k = 0; k < numOfAreas; k++)
@@ -577,9 +580,10 @@ public class Area {
 							Point check = new Point(bordersForEachArea[k].get(j));
 							if (pl.get(i).getCoordinates().getX() == check.getX()
 									&& pl.get(i).getCoordinates().getY() == check.getY()) {
-								if (x.movePerson(pl.get(i)) == false) {
+								if (x.movePerson(pl.get(i)) == false&&areas[(int)(namesThatBorderWith[k]-65)].crowd!=areas[(int)(namesThatBorderWith[k]-65)].height*areas[(int)(namesThatBorderWith[k]-65)].width) {
 									transportedPeople[k].add(pl.get(i));
 									namesOfTheBorders[k].add(namesThatBorderWith[k]);
+									System.out.println("\nPerson has moved out of the area.");
 									pl.remove(i);
 									x.crowd--;
 									places.crowd--;

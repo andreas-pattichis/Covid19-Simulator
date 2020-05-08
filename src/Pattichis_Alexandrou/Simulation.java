@@ -142,7 +142,7 @@ public class Simulation {
 					throw new NegativeNumberException();
 
 				areas = new Area[sumAreas];
-
+				
 				for (int i = 0; i < sumAreas; i++) {
 					areas[i] = new Area((char) ('A' + i));
 
@@ -230,9 +230,9 @@ public class Simulation {
 			for (int j = 0; j < sumAreas; j++) {
 				ArrayList<Person>[] transportedPeopleOfArea;
 				if (opt == 1)
-					transportedPeopleOfArea = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask);
+					transportedPeopleOfArea = areas[j].drawEachStep(peopleVirus, placeVirus, peopleMask, placeMask,areas);
 				else
-					transportedPeopleOfArea = areas[j].drawEachStep(-1, -1, -1, -1);
+					transportedPeopleOfArea = areas[j].drawEachStep(-1, -1, -1, -1,areas);
 
 				ArrayList<Character>[] namesOfTheBorders = areas[j].getNamesOfTheBorders();
 
@@ -246,8 +246,9 @@ public class Simulation {
 			for (int k = 0; k < allTransportedPeople.length; k++)
 				for (int z = 0; z < allTransportedPeople[k].size(); z++) {
 					for (int j = 0; j < sumAreas; j++) {
-						if (areas[j].getName() == allNames[k].get(z))
+						if (areas[j].getName() == allNames[k].get(z)) {
 							areas[j].addPersonToArea(allTransportedPeople[k].get(z));
+							areas[j].addCrowd();}
 					}
 				}
 		}

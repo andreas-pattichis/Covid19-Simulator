@@ -187,7 +187,6 @@ public class Movement extends Grid {
 			boolean moved = false;
 			while (!moved) {
 				nCoordinate = new Point((int) (Math.random() * super.height), (int) (Math.random() * super.height));
-				System.out.println(nCoordinate.getX() + " " + nCoordinate.getY());
 				if (checkEmpty(nCoordinate) && withinMargins(nCoordinate)) {
 					moved = true;
 					p.updateCoordinates(nCoordinate);
@@ -288,8 +287,8 @@ public class Movement extends Grid {
 
 			}
 
-		if (!withinMargins(check))
-			System.out.println("\nPerson has moved out of the area.");
+		//if (!withinMargins(check))
+			//System.out.println("\nPerson has moved out of the area.");
 		return withinMargins(check);
 	}
 
