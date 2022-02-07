@@ -1,11 +1,11 @@
-# Covid Simulation
+# Covid19-Simulator
 
 Authors: 
-Andreas Pattichis (apatti01)
+<br />Andreas Pattichis (apatti01) <br />
 Andreas Alexandrou (aalexa02)
 
 Manual for the simulation
--------------------------
+*************************
 In this manual, we will explain briefly what the user should input in every instruction.
 
 ******************************************************************************************
@@ -19,10 +19,10 @@ In this manual, we will explain briefly what the user should input in every inst
          personal contact with an infected person or by        
             contact with an infected area of the site.       
 
-A person can be: 1) healthy  (wearing a GREEN shirt)           
-                 2) infected (wearing a RED shirt)             
-                 3) immune   (wearing a BLUE shirt)            
-                 && wearing a mask                           
+A person can be: 1) healthy  (wearing a GREEN shirt)          
+                 2) infected (wearing a RED shirt)              
+                 3) immune   (wearing a BLUE shirt)          
+                 && wearing a mask                         
 
 When floor is colored: 1) ORANGE, it just got infected         
                        2) YELLOW, it will stop being infected
