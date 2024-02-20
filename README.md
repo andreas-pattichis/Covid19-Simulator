@@ -192,7 +192,7 @@ This message is printed for the amount of areas that exist in the simulation.
 
 ## 🛠 Initialization & Setup
 
-<pre class="notranslate"><code>git clone https://github.com/andreas-pattichis/covid-simulation.github.io.git
+<pre class="notranslate"><code>git clone https://github.com/andreas-pattichis/Covid19-Simulator.git
 </code></pre>
 
 
