@@ -1,8 +1,7 @@
 # Covid19-Simulator
 
-Authors: 
-<br />Andreas Pattichis (apatti01) <br />
-Andreas Alexandrou (aalexa02)
+![image](https://github.com/andreas-pattichis/Covid19-Simulator/assets/63289392/0fe0fd1c-b0a7-4e45-a620-2d57c93cfd92)
+
 
 Manual for the simulation
 *************************
