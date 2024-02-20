@@ -1,10 +1,22 @@
-# Covid19-Simulator
+# COVID SIMULATION
 
-![image](https://github.com/andreas-pattichis/Covid19-Simulator/assets/63289392/0fe0fd1c-b0a7-4e45-a620-2d57c93cfd92)
+A simulation program that models the process of transmitting a virus to a set of individuals through personal contact or contact with infected areas.
+
+<p align="center">
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/63289392/306253973-52efc263-3e8b-44f8-aa8f-5600e9895e11.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240220T120544Z&X-Amz-Expires=300&X-Amz-Signature=4aef79a3027fba73e433234bbce070ec10b98bb90373c6da3432ff20dbfd1a10&X-Amz-SignedHeaders=host&actor_id=63289392&key_id=0&repo_id=260473376" width="600"/>
+</p>
+
+---
+
+## 📰 Desciption
+
+The COVID Simulation project is a Java-based program that simulates the spread of a virus among individuals within different areas. It provides a visual representation of how the virus can be transmitted through personal contact and contact with infected areas. Users can customize the simulation by setting probabilities for virus transmission and specifying the number of people, infected individuals, immune individuals, and area dimensions. The simulation runs for a defined duration, and at the end, it displays the final count of healthy, infected, and immune individuals in each area. The goal of the project is to help understand the dynamics of virus spread and the effectiveness of preventive measures.
 
 
-Manual for the simulation
-*************************
+---
+
+# Manual for the simulation
+
 In this manual, we will explain briefly what the user should input in every instruction.
 
 ******************************************************************************************
@@ -175,3 +187,16 @@ Here's an example:
 ---------------------------------------------------------------"
 
 This message is printed for the amount of areas that exist in the simulation. 
+
+---
+
+## 🛠 Initialization & Setup
+
+<pre class="notranslate"><code>git clone https://github.com/andreas-pattichis/covid-simulation.github.io.git
+</code></pre>
+
+
+---
+
+## 🚀 Building and Running
+Run the Project in IntelliJ IDEA
