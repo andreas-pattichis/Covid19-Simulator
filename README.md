@@ -2,9 +2,8 @@
 
 A simulation program that models the process of transmitting a virus to a set of individuals through personal contact or contact with infected areas.
 
-<p align="center">
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/63289392/306253973-52efc263-3e8b-44f8-aa8f-5600e9895e11.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240220T120544Z&X-Amz-Expires=300&X-Amz-Signature=4aef79a3027fba73e433234bbce070ec10b98bb90373c6da3432ff20dbfd1a10&X-Amz-SignedHeaders=host&actor_id=63289392&key_id=0&repo_id=260473376" width="600"/>
-</p>
+![image](https://github.com/andreas-pattichis/Covid19-Simulator/assets/63289392/f1abdbf9-55bf-4170-a47e-f7b175f50af3)
+
 
 ---
 
